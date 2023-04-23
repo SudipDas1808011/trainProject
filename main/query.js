@@ -178,9 +178,9 @@ form.addEventListener('submit', (event) => {
     localStorage.setItem('selected_seats','');
     localStorage.setItem('extraseats','');
     try{
-      parent.location.href = 'index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
+      parent.location.href = './main/index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
     }catch(e){
-      window.location.href = 'index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
+      window.location.href = './main/index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
     }
 
 
