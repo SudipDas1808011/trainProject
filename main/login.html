@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+
+    <style>
+      /* basic styling for the form */
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 5px solid black;
+        border-radius: 10px;
+        
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 70%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid black;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+
+
+      }
+      input[type="button"] {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+      }
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      #msg{
+        background-image: url("res/train1.gif");
+        height: 220px;
+        width: 220px;
+        display: none;
+        flex-direction: column;
+        margin-left: 40%;
+      }
+      #confirmation{
+        background-color: red;
+      }
+
+    </style>
+  </head>
+  <body bgcolor="#dfe0c9">
+    <form>
+      <h1>Login </h1>
+      <label for="username">Email:</label>
+      <input type="text" id="username" name="username" placeholder="write your e-mail" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="password" required>
+      
+      <input type="button" id="submitbtnid" value="Login"></input>
+      <a href="register.html">No Account? Register</a>
+      <p id="error-message" style="display:none; color:red;">Incorrect email or password. Please try again.</p>
+    </form>
+    <div id="msg"></div>
+    <div id="confirmation"></div>
+
+
+    <script type="module">
+      
+      
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+      import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+      import { getDatabase, ref, set, get, child, onValue} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+      import { firebaseConfig } from './module.js';
+
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+      const database = getDatabase(app);
+
+
+      var btnid = document.getElementById('submitbtnid');
+      btnid.addEventListener('click',function(){
+        var email = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        signInWithEmailAndPassword (auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          // ...
+          var userId = user.uid;
+          var token = 'abc666';
+          const dbRef = ref(getDatabase());
+          get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+              var x = snapshot.val().token;
+              //localStorage.setItem('myAppToken', x);
+              sessionStorage.setItem('myAppToken', x);
+              //localStorage.setItem('uidToken', userId);
+              sessionStorage.setItem('uidToken', userId);
+            } else {
+              console.log("No data available");
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
+
+          //document.getElementById('msg').innerHTML="Login Successful";
+          //document.getElementById('msg').innerHTML='Redirecting to next page...';
+          document.getElementById('msg').style.display = 'block';
+
+          setTimeout(function() {
+            window.location.href = 'query.html';
+          }, 3000); // Wait for 3 seconds (3000 milliseconds)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          document.getElementById('msg').innerHTML=errorMessage;
+          document.getElementById("error-message").style.display = "block";
+        });
+
+      });
+
+
+      function checkAuth() {
+    // Check if the token exists in localStorage
+    const tokenLocal = sessionStorage.getItem('myAppToken');
+    const uidLocal = sessionStorage.getItem('uidToken');
+    const dbRef = ref(getDatabase());
+          get(child(dbRef, `users/${uidLocal}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+              var x = snapshot.val().token;
+              if(tokenLocal !== x){
+                // alert('token mismatch');
+                window.location.href = 'query.html';
+                
+              }else{
+                window.location.href = 'query.html';
+              }
+            } else {
+              // alert("No data available");
+              window.location.href = 'register.html';
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
+  }
+
+      
+    </script>
+  </body>
+</html>

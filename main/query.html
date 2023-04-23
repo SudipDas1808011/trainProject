@@ -1,0 +1,144 @@
+<html>
+<head>
+  <style >
+    .autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff
+    }
+    form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  }
+  
+  label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  input[type="text"], input[type="date"], select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  input[type="button"] {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+    #dropdown-list1 {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      z-index: 1;
+      background-color: white;
+      border-radius: 5px;
+    }
+    #dropdown-list1 li {
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid black;
+      border-radius: 5px;
+
+    }
+    #dropdown-list1 li:hover {
+      background-color: #3e8e41;
+      color: white;
+    }
+
+    #dropdown-list2 {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      z-index: 1;
+      background-color: white;
+      border-radius: 5px;
+    }
+    #dropdown-list2 li {
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid black;
+      border-radius: 5px;
+
+    }
+    #dropdown-list2 li:hover {
+      background-color: #3e8e41;
+      color: white;
+    }
+  
+  </style>
+
+
+</head>
+<body>
+<form id="myform" method="POST" action="index.html">
+  <label for="from-station">From Station:</label>
+  <input type="text" id="from-station" name="from-station" value="station" required>
+  <ul id="dropdown-list1"></ul>
+  
+  <label for="to-station">To Station:</label>
+  <input type="text" id="to-station" name="to-station" value="station" required>
+  <ul id="dropdown-list2"></ul>
+  
+  
+  <label for="journey-date">Date of Journey:</label>
+  <input type="date" id="journey-date" name="journey-date" required>
+  
+  
+  <label for="seat-type">Select Seat Type:</label>
+  <select id="seat-type" name="seat-type">
+    <option value="AC_B">AC_B</option>
+    <option value="AC_S">AC_S</option>
+    <option value="SNIGDHA">SNIGDHA</option>
+    <option value="F_BERTH">F_BERTH</option>
+    <option value="F_SEAT">F_SEAT</option>
+    <option value="F_CHAIR">F_CHAIR</option>
+    <option value="S_CHAIR">S_CHAIR</option>
+    <option value="SHOVAN">SHOVAN</option>
+    <option value="SHULOV">SHULOV</option>
+    <option value="AC_CHAIR">AC_CHAIR</option>
+  </select>
+  
+  <input type="submit" id='searchTrainbtnid' value="Search Train">
+  <input type="button" id="logout" value="Logout">
+</form>
+
+
+
+<script type="module" src="query.js"></script>
+
+
+</body>
+
+</html>

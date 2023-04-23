@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Ticket Reservation</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="header">
+
+    <button id="dropdown-btn">Search</button>
+    <label id="left_station"></label>
+    <button id="bookBtn">Book Now</button>
+    <div id="selected_seats">
+    </div>
+</div>
+
+<div class="content">
+    <div id="dropdown-div">
+        <div class="train">
+            <div class="coach">
+                <h3>Coach A</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+            <div class="coach">
+                <h3>Coach B</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+            <div class="coach">
+                <h3>Coach C</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+            <div class="coach">
+                <h3>Coach D</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+            <div class="coach">
+                <h3>Coach E</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+            <div class="coach">
+                <h3>Coach F</h3>
+                <div class="seats">
+                    <!-- generate 92 seats using javascript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="containerdiv">
+    <iframe src="query.html" id="iframe" ></iframe>
+    <div id="right">
+        <h1 id="availableTrainId"> Available Train </h1>
+        <div id="containerForAvalaibleTrain">
+            <!-- add as many div elements as needed -->
+        </div>
+        <div id="journey-data" ></div>
+    </div>
+</div>
+<div id="outputid"></div>
+
+<script type="module" src="index.js"></script>
+</body>
+</html>

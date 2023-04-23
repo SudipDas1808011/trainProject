@@ -1,0 +1,176 @@
+body {
+    font-size: 16px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+.train {
+    border: solid;
+    border-radius: 10px;
+}
+
+.coach {
+    margin: 0 10px;
+}
+
+.seat {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: green;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: red;
+    color: aliceblue;
+
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    z-index: 9999;
+    background-color: #ccc;
+    background-image: url("res/a.jpg");
+    color: white;
+    padding-bottom: 5px;
+}
+.labelC{
+    border: solid black;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 7px;
+    margin-top: 5px;
+}
+.labelC:hover{
+    background-color: white;
+    color: black;
+}
+
+#dropdown-btn {
+    background-color: blueviolet;
+    color: aliceblue;
+    padding: 5px;
+    border-radius: 5px;
+    scale: 1.15;
+    cursor: pointer;
+    margin-left: 10px;
+
+}
+#dropdown-btn:hover{
+    background-color: white;
+    color: black;
+}
+#dropdown-btn:active{
+    scale: 1.25;
+}
+
+#bookBtn {
+    background-color: rgb(21, 138, 6);
+    color: aliceblue;
+    margin-top: 10px;
+    margin-left: 42%;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+
+}
+#bookBtn:active{
+    scale: 1.5;
+}
+
+#bookBtn:hover {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    content: "select seat";
+}
+.col{
+    display: flex;
+    justify-items: center;
+    align-content: center;
+}
+#train1{
+    font-size: 30px;
+    color: green;
+    font-weight: bold;
+}
+.containerdiv{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
+    margin-top: 10%;
+    height: 550px;
+
+}
+#right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5%;
+    border: 2px rgb(196, 113, 19);
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0 0 10px rgb(8, 5, 5);
+    margin-top: 50px;
+    width: 350px;
+
+
+}
+
+#availableTrainId {
+    margin-top: 0;
+    margin-bottom: 10px;
+
+}
+
+#journey-data{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    line-height: 1.5;
+    position: relative;
+    margin-top: 10px;
+    border: solid black;
+    padding: 5%;
+    border-radius: 8px;
+    font-size: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #1dcf26;
+}
+
+#iframe{
+    height: 460px;
+    margin: 50px 0 0 50px;
+    box-shadow: 0 0 10px rgb(8, 5, 5);
+    border-radius: 8px;
+}
+
+.content {
+    position: relative;
+    top: 100px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+
+}
+#left_station{
+    margin-left: 20%;
+}
+#selected_seats{
+    font-weight: bold;
+}
