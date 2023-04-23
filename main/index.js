@@ -491,7 +491,7 @@ function verify() {
             isTicketAvail = false;
         }
         //isTicketAvail = isTicketAvail && (!isLeft);
-        //isTicketAvail =  (!isLeft);
+        isTicketAvail =  (!isLeft);
     }
     //console.log('ticket can be purchased?: ' + isTicketAvail);
     return isTicketAvail;
