@@ -510,19 +510,19 @@ function bookOp(){
                 let already_booked, tmpalready_booked, new_booked;
                 tmpalready_booked = localStorage.getItem('booked_seats');
                 tmpalready_booked = splitter(tmpalready_booked);
-                let unavSeat = [];
-                for(let stc in clickedSeatsBk){
-                    if(tmpalready_booked.includes(clickedSeatsBk[stc])){
-                        let idxClc = clickedSeatsBk.indexOf(clickedSeatsBk[stc]);
-                        clickedSeatsBk.splice(idxClc);
-                        unavSeat.push(clickedSeatsBk[stc]);
-                    }
-                }
+                //let unavSeat = [];
+                // for(let stc in clickedSeatsBk){
+                //     if(tmpalready_booked.includes(clickedSeatsBk[stc])){
+                //         let idxClc = clickedSeatsBk.indexOf(clickedSeatsBk[stc]);
+                //         clickedSeatsBk.splice(idxClc);
+                //         unavSeat.push(clickedSeatsBk[stc]);
+                //     }
+                // }
 
                 //new_booked = already_booked.concat(clickedSeatsBk);
                 new_booked = clickedSeatsBk.concat(tmpalready_booked);
                 //let isNull = checkNull(tmpalready_booked);
-                    if(!unavSeat.length>0) {
+                   // if(!unavSeat.length>0) {}
 
                         const updates = {
                             booked_seats: new_booked
@@ -546,9 +546,7 @@ function bookOp(){
                         alert('update successful');
                         localStorage.setItem('selected_seats', '');
                         location.reload();
-                    }else{
-                        alert('already booked');
-                    }
+
             } else {
                 alert('Train Already Left');
             }
@@ -586,6 +584,21 @@ function makeGray(){
         }
     }
 }
+function makeRed(){
+    let ss = localStorage.getItem('selected_seats');
+    ss = splitter(ss);
+    if(ss.length>0){
+        for(const idss of ss){
+            if(isValid(idss)){
+                document.getElementById(idss).classList.toggle('selected');
+            }
+        }
+        document.getElementById('selected_seats').innerText = "selected seat(s): " + ss.join(", ");
+    }
+
+}
+
+setTimeout(makeRed,1000);
 
 if(localStorage.length<15){
     for(let i=1;i<3;i++){
@@ -607,7 +620,6 @@ setTimeout(makeGray,2500);
 
 function onLoadFn(){
     //console.log('refreshed');
-    exportServer();
     setTimeout(()=>{
         try{
             let s = localStorage.getItem('selSeatDropDown');
