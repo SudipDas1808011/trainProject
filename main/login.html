@@ -80,19 +80,8 @@
     <div id="msg"></div>
     <div id="confirmation"></div>
 
-<script>
-  function allowedDevices(){
-    // Check if the user is accessing the site from a mobile device.
-    if (!(navigator.platform.indexOf('Win')>=0)) {
-        // User is accessing the site from a mobile device.
-        console.log('User is accessing the site from a mobile device.');
-    } else {
-        alert("Please Use this Site from Mobile Devices");
-        window.location.href = 'https://mte.ruet.ac.bd';
-    }
-}
-  window.addEventListener('load',allowedDevices);
-   </script> 
+ 
+
   
   <script type="module">
       
@@ -115,9 +104,19 @@
       const auth = getAuth(app);
       const database = getDatabase(app);
 
-
+ function allowedDevices(){
+    // Check if the user is accessing the site from a mobile device.
+    if (!(navigator.platform.indexOf('Win')>=0)) {
+        // User is accessing the site from a mobile device.
+        console.log('User is accessing the site from a mobile device.');
+    } else {
+        alert("Please Use this Site from Mobile Devices");
+        window.location.href = 'https://mte.ruet.ac.bd';
+    }
+}
       var btnid = document.getElementById('submitbtnid');
       btnid.addEventListener('click',function(){
+        allowedDevices();
         var email = document.getElementById('username').value;
         var password = document.getElementById('password').value;
 
