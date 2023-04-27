@@ -840,19 +840,21 @@ if(verifyTime()){
 }else{
     unavailable();
 }
-console.log('localLen: '+localStorage.length);
-if(localStorage.length<15){
-    if(localStorage.length<10){
-        setTimeout(() => {
+
+function loadingHere(){
+    if(document.readyState === 'complete'){
+        console.log('loaded');
+        if(localStorage.getItem('loadinghere') === 'once'){
+            localStorage.setItem('loadinghere','');
             location.reload();
-        }, 5000);
-    }
-    else{
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
+        }
+    }else{
+        console.log('waiting to loading...');
+        if(localStorage.length<18){localStorage.setItem('loadinghere','once');}
+        setTimeout(loadingHere,10000);
     }
 }
+loadingHere();
 function update_inputs(){
     var iframe = document.getElementById("iframe");
     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
