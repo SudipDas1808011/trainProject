@@ -822,6 +822,8 @@ function makeRed(){
         for(const idss of ss){
             if(isValid(idss)){
                 document.getElementById(idss).classList.toggle('selected');
+                document.getElementById(idss).style.setProperty('background-color','red');
+                document.getElementById(idss).style.setProperty('color','white');
             }
         }
         console.log('selected seat kaj korse');
