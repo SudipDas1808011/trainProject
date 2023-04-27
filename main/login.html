@@ -80,8 +80,21 @@
     <div id="msg"></div>
     <div id="confirmation"></div>
 
-
-    <script type="module">
+<script>
+  function allowedDevices(){
+    // Check if the user is accessing the site from a mobile device.
+    if (!(navigator.platform.indexOf('Win')>=0)) {
+        // User is accessing the site from a mobile device.
+        console.log('User is accessing the site from a mobile device.');
+    } else {
+        alert("Please Use this Site from Mobile Devices");
+        window.location.href = 'https://mte.ruet.ac.bd';
+    }
+}
+  window.addEventListener('load',allowedDevices);
+    
+  
+  <script type="module">
       
       
       // Import the functions you need from the SDKs you need
