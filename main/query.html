@@ -1,6 +1,9 @@
 <html>
 <head>
   <style >
+    *{
+      box-sizing: border-box;
+    }
     .autocomplete-dropdown {
     position: absolute;
     top: 100%;
@@ -97,12 +100,18 @@
       color: white;
     }
   
+    @media screen and (max-width: 700px){
+      *{
+
+      }
+    }
+    
   </style>
 
 
 </head>
 <body>
-<form id="myform" method="POST" action="index.html">
+<form id="myform" method="POST" action="../index.html">
   <label for="from-station">From Station:</label>
   <input type="text" id="from-station" name="from-station" value="station" required>
   <ul id="dropdown-list1"></ul>

@@ -14,6 +14,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 import { firebaseConfig } from './module.js';
 
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -101,6 +102,15 @@ function t_12hr(){
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
     return hours.toString().padStart(2, '0') + ':' + minutes + ' ' + ampm;
 }
+function generateUniqueId() {
+    var randomNumber = Math.floor(Math.random() * 1000000);
+    var timestamp = new Date().getTime();
+    var uniqueId = timestamp.toString() + randomNumber.toString();
+    return uniqueId;
+}
+
+var myUniqueId = generateUniqueId();
+console.log(myUniqueId);
 
 function mapObj(map){
     onValue(ref(database,'ticketContainer/'+jouneyDateID+'/'+trainName+'/'+up_down),(snapshot)=>{
@@ -193,6 +203,37 @@ function genSeat(){
         }
     }
     localStorage.setItem('disallowSeatsForThisJourney',disallowSeatsForThisJourney) ;
+   return disallowSeatsForThisJourney;
+}
+function makeGrayLocal(){
+    let bked_sts = localStorage.getItem('booked_seats');
+    if(isValid(bked_sts)){
+        bked_sts = bked_sts.split(',');
+        let set = new Set(bked_sts);
+        bked_sts = Array.from(set);
+        bked_sts = bked_sts.sort();
+    }else{
+        bked_sts = [];
+    }
+    let crp = localStorage.getItem('curPos');
+    crp = parseInt(crp);
+    if(crp>-1){
+
+        let alct_st_mg = localStorage.getItem('alctseats'+fromStationID);
+        if(isValid(alct_st_mg)){alct_st_mg = alct_st_mg.split(',');}
+        let xt_st = localStorage.getItem('extaseats');
+        xt_st = splitter(xt_st);
+        for(let s in bked_sts){
+            if(xt_st.includes(bked_sts[s])){
+                bked_sts.splice(s,1);
+            }else{
+                document.getElementById(bked_sts[s]).style.backgroundColor = 'gray';
+            }
+        }
+    }else{
+
+    }
+
 }
 function retrieveDataOnce(path,serial){
     if(serial === 1){//available trains
@@ -217,14 +258,19 @@ function retrieveDataOnce(path,serial){
                 for(let i in availableTrains){
                     let jd = parseInt(journeyData[2].split('-')[2]);
                     let gap = jd - dateNow.getDate();
-                    if (trInfoOnce.offDay.toLowerCase() === daysInWeek[dateNow.getDay()+gap].toLowerCase()) {
+                    let journeyDateId = parseInt(journeyData[2].replace(/-/g,""));
+                    let journey_idx = dateNow.getDay()+journeyDateId-parseInt(todayDateId());
+
+                    if(journey_idx>6){journey_idx -=7;}
+                    console.log('ji: '+journey_idx);
+                    if (trInfoOnce.offDay.toLowerCase() === daysInWeek[journey_idx].toLowerCase()) {
                         var element = document.querySelector('.content');
                         element.style.display = 'none';//checking if today is off day
                         document.getElementById('containerForAvalaibleTrain').innerText = availableTrains[i] + " Today is OFF";
                         document.getElementById('availableTrainId').innerHTML = "<h2  style='color: red;'>Today is OFF</h2>"
                         let journeyDataIdWet = document.getElementById('journey-data');
                         journeyDataIdWet.innerText += "From: " + journeyData[0] + "\nTo: " + journeyData[1] + "\nDate: " + journeyData[2] + "\n";
-                        journeyDataIdWet.innerText += "Today: " + daysInWeek[dateNow.getDay()] + "\n";
+                        journeyDataIdWet.innerText += "Day: " + daysInWeek[journey_idx] + "\n";
                         journeyDataIdWet.innerText += "Depart Time: " + departTimesAr[fromStationID] + "\n";
                         journeyDataIdWet.innerText += "Arrival Time: " + departTimesAr[4] + "\n";
                         journeyDataIdWet.innerText += "Allocated seats: " + localStorage.getItem('cnt_alctseats'+fromStationID.toString()) + "\n";
@@ -232,11 +278,17 @@ function retrieveDataOnce(path,serial){
                         let trainNameCap = availableTrains[i].toString().charAt(0).toUpperCase()+availableTrains[i].toString().slice(1);
                         document.getElementById('containerForAvalaibleTrain').innerText = trainNameCap + " is available today";
                         let journeyDataIdWet = document.getElementById('journey-data');
-                        journeyDataIdWet.innerText = "From: " + journeyData[0] + "\nTo: " + journeyData[1] + "\nDate: " + journeyData[2] + "\n";
-                        journeyDataIdWet.innerText += "Today: " + daysInWeek[dateNow.getDay()] + "\n";
-                        journeyDataIdWet.innerText += "Depart Time: " + departTimesAr[fromStationID] + "\n";
-                        journeyDataIdWet.innerText += "Arrival Time: " + departTimesAr[4] + "\n";
-                        journeyDataIdWet.innerText += "Allocated seats: " + localStorage.getItem('cnt_alctseats'+fromStationID.toString()) + "\n";
+                        journeyDataIdWet.innerHTML = "From: " + journeyData[0] + "<br>To: " + journeyData[1] + "\nDate: " + journeyData[2] + "<br>";
+                        journeyDataIdWet.innerHTML += "Day: " + daysInWeek[journey_idx] + "<br>";
+                        journeyDataIdWet.innerHTML += "Depart Time: " + departTimesAr[fromStationID] + "<br>";
+                        journeyDataIdWet.innerHTML += "Arrival Time: " + departTimesAr[4] + "<br>";
+                        let range_alct_st = localStorage.getItem('alctseats'+fromStationID);
+                        let len_range_alct_st;
+                        if(isValid(range_alct_st)){
+                            range_alct_st = splitter(range_alct_st);
+                             len_range_alct_st = range_alct_st.length;
+                        }
+                        journeyDataIdWet.innerHTML += "Allocated seats: " + localStorage.getItem('cnt_alctseats'+fromStationID.toString()) +"<p align='center'>("+range_alct_st[0]+" --> "+range_alct_st[(len_range_alct_st-1)] +")</p>";
                     }
                     break;
                 }
@@ -264,6 +316,16 @@ function retrieveDataOnvalue(path,serial){
                     }else{
                         if(parseInt(trInfoOV.currentPos)>=0 && parseInt(trInfoOV.currentPos)<trInfoOV.stations.length){
                             document.getElementById('left_station').innerText = "Left from : "+trInfoOV.stations[trInfoOV.currentPos];
+                            document.getElementById('left_station').style.setProperty("font-size","27px");
+                            document.getElementById('left_station').style.setProperty("background-color","red");
+                            document.getElementById('left_station').style.setProperty("color","white");
+                            document.getElementById('left_station').style.setProperty("position","fixed");
+                            document.getElementById('left_station').style.setProperty("right","0");
+                            document.getElementById('left_station').style.setProperty("padding-right","20px");
+                            document.getElementById('left_station').style.setProperty("border-radius","0");
+                            //document.getElementById('left_station').style.setProperty("animation","blink 5s infinite");
+
+                            
                         }else if(parseInt(trInfoOV.currentPos) === trInfoOV.stations.length){
                             document.getElementById('left_station').innerText = "Train Reached its destination";
                         }else{
@@ -279,11 +341,27 @@ function retrieveDataOnvalue(path,serial){
                 console.log('no data found for train position');
             }
         });
-    }else if(serial===2){//booked
+    }else if(serial===2){//booked onValue
         onValue(ref(database,path),(snapshot)=>{
             if(snapshot.exists()){
                 let tc = snapshot.val();
                 localStorage.setItem('booked_seats',tc.booked_seats);
+                let ss_Ov = localStorage.getItem('selected_seats'); //ss_Ov => selected_seats
+                ss_Ov = splitter(ss_Ov);
+                for(let st_ssOv in ss_Ov){
+                    if(tc.booked_seats.includes(ss_Ov[st_ssOv])){
+                        let idx_ssOv = ss_Ov.indexOf(ss_Ov[st_ssOv]);
+                        if(idx_ssOv>-1){
+                            ss_Ov.splice(idx_ssOv,1);
+                            if(isValid(ss_Ov[st_ssOv])){
+                                document.getElementById(ss_Ov[st_ssOv]).classList.toggle('selected');
+                                document.getElementById(ss_Ov[st_ssOv]).style.setProperty('color','black');
+                            }
+                        }
+                    }
+                }
+                localStorage.setItem('selected_seats',ss_Ov.toString());
+                document.getElementById('selected_seats').innerText = "selected seat(s): " + ss_Ov.toString();
             }
         });
     }else if(serial===3){//extraseats
@@ -310,7 +388,6 @@ function retrieveDataOnvalue(path,serial){
                     const idelxt = document.getElementById(idxt);
                     if(isValid(idelxt)){
                         idelxt.style.setProperty('background-color', 'green');
-
                     }else{
                         console.log("idel is null");
                     }
@@ -334,6 +411,12 @@ function clickedSeatOp(){
     const allSeats = document.querySelectorAll(".seat");
     for (let i = 0; i < allSeats.length; i++) {
         allSeats[i].addEventListener("click", function () {
+console.log('clicked');
+            document.getElementById('overlay').style.display = 'block';
+                                setTimeout(()=>{
+                                    document.getElementById('overlay').style.display = 'none';
+                                },500);
+
             let clickedSeats = localStorage.getItem('selected_seats');
             clickedSeats = splitter(clickedSeats);
             let clickedSeatLength=clickedSeats.length;
@@ -342,35 +425,112 @@ function clickedSeatOp(){
             if(disallowedIds.includes(this.id)){
                 console.log("Not available");
             }else{
-                if (clickedSeatLength < 4 || this.classList.contains("selected") ) {
-                    //---------------
-                    // console.log("Clicked on " + this.id);
-                    //-------------
-                    this.classList.toggle("selected");
-                    const seatNumber = this.querySelector(".seat-number").innerText;
-                    
-                    if (this.classList.contains("selected")) {
-                        clickedSeats.push(seatNumber);
-                        this.style.backgroundColor = 'red';
-                    } else {
-                        clickedSeats = clickedSeats.filter(seat => seat !== seatNumber);
-                        this.style.backgroundColor = 'green';
+                if ((clickedSeatLength < 4 || this.classList.contains("selected")) ) { let isValid_seat;
+                    function myFunction(idplz) {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve(idplz);
+                            }, 1000);
+                        });
                     }
-                    //console.log(`Selected seats: ${selectedSeats.join(", ")}`);
-                    document.getElementById('selected_seats').innerText = "selected seat(s): " + clickedSeats.join(", ");
-                    localStorage.setItem('selected_seats', clickedSeats);
+                    verify_Unique(this.id);
+                    function verify_Unique(selected_seat_id){
+                        let path_vfUq = 'selected_seats/'+jouneyDateID+'/'+trainName+'/'+up_down+'/'+selected_seat_id;
+                        if(isValid(selected_seat_id)){
+                            get(ref(database,path_vfUq))
+                                .then((snapshot) => {
+                                    if(snapshot.exists()){
+                                        myAsyncFunction(false,selected_seat_id);
+                                    }else{
+                                        myAsyncFunction(true,selected_seat_id);
+                                    }
+                                });
+                        }
+                    }
+                    async function myAsyncFunction(bl,sid) {
+                        const value = await myFunction(bl);
+                        isValid_seat = value; 
+                        start_selecting(isValid_seat,sid);
+                    }
+                    function start_selecting(isValid_seat,bs_ID_val){
+                        let bs_ID = document.getElementById(bs_ID_val);
+                            let path_ss = 'selected_seats/'+jouneyDateID+'/'+trainName+'/'+up_down;
+                            let update_ss = {};
+                            //bs_ID.style.setProperty('animation','blink 500ms 3');
 
-                    if (clickedSeatLength === 4) {
-                        for (let j = 0; j < allSeats.length; j++) {
-                            if (!allSeats[j].classList.contains("selected")) {
-                                allSeats[j].classList.add("disabled");
+                            bs_ID.classList.toggle("selected");
+                        const seatNumber = bs_ID.querySelector(".seat-number").innerText;
+                            if (bs_ID.classList.contains("selected")) {
+                                if(isValid_seat){
+                                    bs_ID.style.backgroundColor = 'red';
+                                    bs_ID.style.color = 'white';
+                                    update_ss[bs_ID.id]=sessionStorage.getItem('uidToken');
+                                    update(ref(database,path_ss),update_ss);
+                                    clickedSeats.push(seatNumber);
+                                }else{
+                                    bs_ID.style.backgroundColor = 'yellow';
+                                    bs_ID.style.color = 'black';
+                                    bs_ID.title = 'this seat is being using by other';
+                                }
+                            } else {
+                                bs_ID.style.backgroundColor = 'green';
+                                bs_ID.style.color = 'black';
+                                bs_ID.title = '';
+                                clickedSeats = clickedSeats.filter(seat => seat !== seatNumber);
+                                if(clickedSeats.length===0){
+                                    console.log('zero');
+                                    setTimeout(() => {
+                                        document.getElementById('selected_seats').innerText = "";
+                                    }, 1000);
+                                    document.getElementById('selected_seats').innerText = "";
+                                    
+                                }
+                                if(!isValid_seat){
+                                    let j_katse_tar_token;
+                                    let amar_token = sessionStorage.getItem('uidToken');
+                                    let rpath = 'selected_seats/'+jouneyDateID+'/'+trainName+'/'+up_down+'/'+bs_ID_val;
+                                    get(ref(database,rpath))
+                                        .then((snapshot) => {
+                                            if(snapshot.exists()){
+                                                let val_ssPrv = snapshot.val();
+                                                j_katse_tar_token = val_ssPrv;
+
+                                                if(j_katse_tar_token === amar_token){
+                                                    set(ref(database,rpath),{
+
+                                                    });
+                                                 }
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            // Handle any errors here
+                                            console.error(error);
+                                        });
+
+                                }
+
                             }
-                        }
-                    } else {
-                        for (let j = 0; j < allSeats.length; j++) {
-                            allSeats[j].classList.remove("disabled");
-                        }
+                            
+                                //console.log(`Selected seats: ${selectedSeats.join(", ")}`);
+                                document.getElementById('selected_seats').style.display = "block";
+                            document.getElementById('selected_seats').innerText = "selected seat(s): " + clickedSeats.join(", ");
+                            localStorage.setItem('selected_seats', clickedSeats);
+
+                            if (clickedSeatLength === 4) {
+                                for (let j = 0; j < allSeats.length; j++) {
+                                    if (!allSeats[j].classList.contains("selected")) {
+                                        allSeats[j].classList.add("disabled");
+                                    }
+                                }
+                            } else {
+                                for (let j = 0; j < allSeats.length; j++) {
+                                    allSeats[j].classList.remove("disabled");
+                                }
+                            }
+                            
+
                     }
+
                 }else{
                     alert('Your Quota for MAX 4 seats is fulfilled');
                 }
@@ -379,41 +539,30 @@ function clickedSeatOp(){
         });
     }
 }
-function drop_down_operation(){
-    const dropdownBtn = document.getElementById('dropdown-btn');
-    const dropdownDiv = document.getElementById('dropdown-div');
-    if (localStorage.getItem('selSeatDropDown') === '1') {
-        dropdownDiv.style.display = 'block';
-    } else {
-        dropdownDiv.style.display = 'none';
-    }
-    dropdownBtn.addEventListener('click', () => {
-        if (dropdownDiv.style.display === 'none') {
-            var scrollPos = localStorage.getItem('scrollPos');
-            localStorage.setItem('selSeatDropDown', '1');
-            dropdownDiv.style.display = 'block';
-            console.log(scrollPos);
-            if (parseInt(scrollPos) > 20) {
-                if(parseInt(scrollPos) > 1850){
-                    window.scrollTo(0, 0);
-                }else{
-                    window.scrollTo(0, parseInt(scrollPos));
-                }
-
-            }else{
-                window.scrollTo(0, 0);
-            }
-        } else {
-            dropdownDiv.style.display = 'none';
-            localStorage.setItem('selSeatDropDown', '');
-            window.scrollTo(0, 18);
-        }
-    });
-}
 function gotoSearch(){
     const myDiv = document.getElementById('iframe');
     myDiv.scrollIntoView({ behavior: 'smooth' });
+    let cn_div_id = document.getElementById('containerdiv');
+    
+    cn_div_id.style.cssText="display: flex;flex-wrap: wrap;align-items: flex-start;align-content: flex-start;";
+    document.getElementById('dropdown-btn').style.display = "none";
+    document.getElementById('hide').style.display = "block";
+    document.getElementById('content').style.display = "none";
+    document.getElementById('journey-data').style.whiteSpace = 'pre-line';
+    
+    
+
 }
+function hide_container(){
+    let cn_div_id = document.getElementById('containerdiv');
+    cn_div_id.style.display = "none";
+    document.getElementById('hide').style.display = "none";
+    document.getElementById('dropdown-btn').style.display = "block";
+    document.getElementById('content').style.display = "block";
+    
+    
+}
+document.getElementById('hide').addEventListener('click',hide_container);
 //setInterval(makeGray,1000);
 function clickDropDwn(){
     document.getElementById('dropdown-btn').addEventListener('click',gotoSearch);
@@ -439,27 +588,7 @@ function callRetrieveData(){
      path5 = 'mapSeatToStation/'+jouneyDateID+'/'+trainName+'/'+up_down;
      retrieveDataOnvalue(path5,4);//mapping
 }
-function wrtieTrainData(){
-    for(let i in availableTrains){
-        
-            if (localStorage.getItem('offDay') === daysInWeek[dateNow.getDay()].toLowerCase()) {
-                var element = document.querySelector('.content');
-                element.style.display = 'none';//checking if today is off day
-                document.getElementById('containerForAvalaibleTrain').innerText = availableTrains[i] + " Today is OFF";
-                document.getElementById('availableTrainId').innerHTML = "<h1 style='color: red'>Today is OFF</h1>"
-
-            } else {
-                let trainNameCap = availableTrains[i].toString().charAt(0).toUpperCase()+availableTrains[i].toString().slice(1);
-                document.getElementById('containerForAvalaibleTrain').innerText = trainNameCap + " is available today";
-            }
-
-
-        break;
-    }
-
-
-}
-function verify() {
+function verifyTime() {
     let currentTimeIn12fmt = t_12hr();
     let departTimeofCrntTrainIn12fmt = departTimesAr[fromStationID];
     var crpos = localStorage.getItem('curPos');
@@ -496,61 +625,57 @@ function verify() {
     //console.log('ticket can be purchased?: ' + isTicketAvail);
     return isTicketAvail;
 }
-function bookOp(){
-    var bookBtnId = document.getElementById('bookBtn');
-    var userJourneyDate = jouneyDateID;
+
+function bookOp(){//start booking
+    document.getElementById('header').style.display = "block";
+    var bookBtnId = document.getElementById('confirm_btn');
     //booking seat
     bookBtnId.addEventListener('click', function () {
+        document.getElementById('confirmation_popup').style.display = "none";
+        
+        var userJourneyDate = jouneyDateID;
         let clickedSeatsBk = localStorage.getItem('selected_seats');
         clickedSeatsBk = splitter(clickedSeatsBk);
+        for(let clc_st in clickedSeatsBk){
+            let path_clc_st = 'selected_seats/'+jouneyDateID+'/'+trainName+'/'+up_down+'/'+clickedSeatsBk[clc_st];
+            set(ref(database,path_clc_st),{
 
+            });
+        }
         if (clickedSeatsBk.length>0) {
-            if (verify()) {
+            if (verifyTime()) {
                 document.getElementById('selected_seats').innerText += "\n\nBooked seat " + clickedSeatsBk + " successful";
                 let already_booked, tmpalready_booked, new_booked;
                 tmpalready_booked = localStorage.getItem('booked_seats');
                 tmpalready_booked = splitter(tmpalready_booked);
-                //let unavSeat = [];
-                // for(let stc in clickedSeatsBk){
-                //     if(tmpalready_booked.includes(clickedSeatsBk[stc])){
-                //         let idxClc = clickedSeatsBk.indexOf(clickedSeatsBk[stc]);
-                //         clickedSeatsBk.splice(idxClc);
-                //         unavSeat.push(clickedSeatsBk[stc]);
-                //     }
-                // }
 
-                //new_booked = already_booked.concat(clickedSeatsBk);
-                new_booked = clickedSeatsBk.concat(tmpalready_booked);
-                //let isNull = checkNull(tmpalready_booked);
-                   // if(!unavSeat.length>0) {}
+                let bookable_seats = clickedSeatsBk;
+                    new_booked = bookable_seats.concat(tmpalready_booked);
+                    const updates = {
+                        booked_seats: new_booked
+                    }
+                    let userBooked;
+                    let user_already_Booked = localStorage.getItem('userBooked');
+                    user_already_Booked = splitter(user_already_Booked);
+                    userBooked = user_already_Booked.concat(bookable_seats);
 
-                        const updates = {
-                            booked_seats: new_booked
-                        }
-                        let userBooked;
-                        let user_already_Booked = localStorage.getItem('userBooked');
-                        user_already_Booked = splitter(user_already_Booked);
-                        userBooked = user_already_Booked.concat(clickedSeatsBk);
-
-                        const updatesUser = {
-                            userBooked: userBooked,
-                            userJourneyDate: userJourneyDate,
-                        }
-                        for (let ss in clickedSeatsBk) {
-                            var updateMappingofSeats = {}; //declare jsondata
-                            updateMappingofSeats[clickedSeatsBk[ss]] = journeyData[1]; //seat-key = toStation
-                            update(ref(database, '/mapSeatToStation/' + jouneyDateID + '/' + trainName + '/' + up_down), updateMappingofSeats);
-                        }
-                        update(ref(database, '/ticketContainer/' + jouneyDateID + "/" + trainName + "/" + up_down), updates);
-                        update(ref(database, '/users/' + localStorage.getItem('uidToken')), updatesUser);
-                        alert('update successful');
-                        localStorage.setItem('selected_seats', '');
-                        location.reload();
-
+                    const updatesUser = {
+                        userBooked: userBooked,
+                        userJourneyDate: userJourneyDate,
+                    }
+                    for (let ss in clickedSeatsBk) {
+                        var updateMappingofSeats = {}; //declare jsondata
+                        updateMappingofSeats[clickedSeatsBk[ss]] = journeyData[1]; //seat-key = toStation
+                        update(ref(database, '/mapSeatToStation/' + jouneyDateID + '/' + trainName + '/' + up_down), updateMappingofSeats);
+                    }
+                    update(ref(database, '/ticketContainer/' + jouneyDateID + "/" + trainName + "/" + up_down), updates);
+                    update(ref(database, '/users/' + sessionStorage.getItem('uidToken')), updatesUser);
+                    alert('update successful');
+                    localStorage.setItem('selected_seats', '');
+                    location.reload();
             } else {
                 alert('Train Already Left');
             }
-
         } else {
             alert("select seat first!");
         }
@@ -569,21 +694,127 @@ function unavailable(){
 
     var element = document.querySelector('.content');
     element.style.display = 'none';
+    document.getElementById('hide').disabled = true;
 }
-function makeGray(){
-    let tmpG;
-    tmpG = localStorage.getItem('disallowSeatsForThisJourney');
-    let disallowedIdsG;
-    disallowedIdsG = splitter(tmpG);
-    for (const id of disallowedIdsG) {
-        const idel = document.getElementById(id);
-        if(isValid(idel)){
-            idel.style.setProperty('background-color', 'gray');
-        }else{
-            console.log("idel is null");
-        }
+
+function confirmation_popup(){
+let conf_popup_id = document.getElementById('confirmation_text');
+conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Confirm Your Booking?</u><table id='table' border=1><tr><th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+localStorage.getItem('selected_seats')+"</td></tr>";
+}
+
+document.getElementById('bookBtn').addEventListener('click',()=>{
+    let ss_data = localStorage.getItem('selected_seats');
+    ss_data = splitter(ss_data);
+    if(ss_data.length>0){
+        confirmation_popup();
+        document.getElementById('confirmation_popup').style.display = "block";
+        document.getElementById('content').style.display = "none";
+        document.getElementById('header').style.display = "none";
+    }else{
+        alert('Select at least one seat');
     }
+
+});
+document.getElementById('cancel_btn').addEventListener('click',()=>{
+    document.getElementById('confirmation_popup').style.display = "none";
+    document.getElementById('header').style.display = "block";
+    document.getElementById('content').style.display = "block";
+        
+});
+
+// function makeGray(){
+//     let tmpG;
+//     tmpG = localStorage.getItem('disallowSeatsForThisJourney');
+//     let disallowedIdsG;
+//     disallowedIdsG = splitter(tmpG);
+//     for (const id of disallowedIdsG) {
+//         const idel = document.getElementById(id);
+//         if(isValid(idel)){
+//             idel.style.setProperty('background-color', 'gray');
+//         }else{
+//             console.log("idel is null");
+//         }
+//     }
+//     console.log('make gray called');
+// }
+// window.onload = function(){
+//     setTimeout(()=>{
+//         makeGray();
+        
+//     },3000);
+// };
+
+function makeGray(){
+    let dis_ids = genSeat();//other stations seats consider to be disallowed
+    clickedSeatOp();
+    let path_map_gray = 'mapSeatToStation/'+jouneyDateID+'/'+trainName+'/'+up_down;
+    onValue(ref(database,path_map_gray),(snapshot)=>{
+
+        if(snapshot.exists()){
+            let obj_map_gray = snapshot.val();
+            let keys_map_gray = Object.keys(obj_map_gray);
+            let path_trInfo = 'trainInfo/'+trainName+'/'+up_down;
+
+            get(ref(database,path_trInfo)) //getting allocated seats for current station
+            .then((snapshot) => {
+                if(snapshot.exists()){
+
+                   let obj_trInfo = snapshot.val();
+                   let obj_seatInfo = obj_trInfo.seatInfo.lists[fromStationID].seats;
+                   let alct_inGray = Object.values(obj_seatInfo);
+                    function keyFromVal(myObj,myValue){
+                       return Object.keys(myObj).find(key => myObj[key] === myValue);
+                    }
+                    for(let i_key in keys_map_gray){
+                        let st_val = keys_map_gray[i_key];//keys a index dile station pabo
+
+                        if(obj_map_gray[st_val]){
+
+                            if(alct_inGray.includes(st_val) ){
+                                let idx_alct = alct_inGray.indexOf(st_val);
+                                if(idx_alct>-1){
+                                    alct_inGray.splice(idx_alct,1);
+                                }
+                            }
+                        }else{
+                            console.log('nai');
+                        }
+                    }
+                    for(let st_dis in dis_ids) {
+                        let st_dis_val = dis_ids[st_dis];
+                        let dst_id_mp;
+
+                        if (isValid(st_dis_val)) {
+                            if (keys_map_gray.includes(st_dis_val)) {
+                                dst_id_mp = parseInt(obj_map_gray[st_dis_val].toString().match(/\d+/)[0]);
+                                if (fromStationID > dst_id_mp) {
+                                    let idx_dis_id = dis_ids.indexOf(st_dis_val);
+                                    if (idx_dis_id > -1) {
+                                        dis_ids.splice(idx_dis_id, 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    dis_ids = dis_ids.concat(alct_inGray);
+                    for(let i_id in dis_ids){
+                        let st_id_gray = document.getElementById(dis_ids[i_id]);
+                        st_id_gray.style.setProperty('backgroundColor','gray');
+                    }
+                }
+
+            })
+            .catch((error) => {
+                // Handle any errors here
+                console.error(error);
+                console.error('pailam na re');
+            });
+
+        }
+    });
+
 }
+
 function makeRed(){
     let ss = localStorage.getItem('selected_seats');
     ss = splitter(ss);
@@ -593,54 +824,67 @@ function makeRed(){
                 document.getElementById(idss).classList.toggle('selected');
             }
         }
-        document.getElementById('selected_seats').innerText = "selected seat(s): " + ss.join(", ");
+        
     }
 
 }
 
 setTimeout(makeRed,1000);
 
-if(localStorage.length<15){
-    for(let i=1;i<3;i++){
-        setTimeout(()=>{
-            location.reload();
-        },2000);
-    }
-}
 callRetrieveData();
-genSeat();
-//wrtieTrainData();
-clickedSeatOp();
-if(verify()){
+
+
+document.getElementById('selected_seats').style.display = "none";
+if(verifyTime()){
     bookOp();
 }else{
     unavailable();
 }
-setTimeout(makeGray,2500);
-
+console.log('localLen: '+localStorage.length);
+if(localStorage.length<15){
+    if(localStorage.length<10){
+        setTimeout(() => {
+            location.reload();
+        }, 5000);
+    }
+    else{
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    }
+}
+function update_inputs(){
+    var iframe = document.getElementById("iframe");
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var input1 = innerDoc.getElementById("from-station");
+    input1.value = journeyData[0];
+    var input2 = innerDoc.getElementById("to-station");
+    input2.value = journeyData[1];
+}
+update_inputs();
 function onLoadFn(){
     //console.log('refreshed');
+    gotoSearch();
+    makeGray();
     setTimeout(()=>{
+
+
         try{
             let s = localStorage.getItem('selSeatDropDown');
             let isNull = checkNull(s);
             if(isNull){
                 window.scrollTo(0,0);
             }
+
         }catch (e){
             return
         }
     },3000);
 }
 
-
-
-window.onstorage = function(event) {
-    if (event.key === 'booked_seats') {
-        console.log('localStorage changed');
-        setTimeout(makeGray, 1000);
-    }
-};
+setTimeout(()=>{
+  document.getElementById('overlay').style.display = "none";
+},8000);
 
 
 

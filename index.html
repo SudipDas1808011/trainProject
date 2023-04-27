@@ -2,75 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Train Ticket Reservation</title>
-    <link rel="stylesheet" href="./main/index.css">
+
+    <link rel="icon" type="image/png" href="main/res/icon.png">
+
+    <link rel="stylesheet" href="main/index.css">
 </head>
 <body>
-<div class="header">
-
-    <button id="dropdown-btn">Search</button>
-    <label id="left_station"></label>
-    <button id="bookBtn">Book Now</button>
-    <div id="selected_seats">
-    </div>
+    
+<div class="overlay" id="overlay">
+    <div class="spinner" id="spinner"></div>
+    <div class="bangladesh-flag"></div>
 </div>
 
-<div class="content">
-    <div id="dropdown-div">
-        <div class="train">
-            <div class="coach">
-                <h3>Coach A</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+<div class="parent_container">
+    <div class="header" id="header">
+        <div><button id="bookBtn">Book Now</button></div>
+        <button id="dropdown-btn" class="dropdown-btn">Hide Seats</button>
+        <button id="hide" class="dropdown-btn">Show Seats</button>
+                
+        <div id="selected_seats" class="outputs"></div>
+        <label id="left_station" class="outputs"></label>
+            
+    </div>
+    
+    <label id="msg" style="margin-left: 20px"></label><br>
+    
+    <div class="content" id="content">
+        <div id="dropdown-div">
+            <div class="train">
+                <div class="coach">
+                    <h2>Coach A</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
-            </div>
-            <div class="coach">
-                <h3>Coach B</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+                <div class="coach">
+                    <h2>Coach B</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
-            </div>
-            <div class="coach">
-                <h3>Coach C</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+                <div class="coach">
+                    <h2>Coach C</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
-            </div>
-            <div class="coach">
-                <h3>Coach D</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+                <div class="coach">
+                    <h2>Coach D</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
-            </div>
-            <div class="coach">
-                <h3>Coach E</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+                <div class="coach">
+                    <h2>Coach E</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
-            </div>
-            <div class="coach">
-                <h3>Coach F</h3>
-                <div class="seats">
-                    <!-- generate 92 seats using javascript -->
+                <div class="coach">
+                    <h2>Coach F</h2>
+                    <div class="seats">
+                        <!-- generate 92 seats using javascript -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </div>
 
-<div class="containerdiv">
-    <iframe src="./main/query.html" id="iframe" ></iframe>
+<div class="containerdiv" id="containerdiv">
+
     <div id="right">
         <h1 id="availableTrainId"> Available Train </h1>
-        <div id="containerForAvalaibleTrain">
+        <div id="containerForAvalaibleTrain" style="font-size:26px">
             <!-- add as many div elements as needed -->
         </div>
         <div id="journey-data" ></div>
     </div>
+    <iframe src="main/query.html" id="iframe" ></iframe>
 </div>
-<div id="outputid"></div>
 
-<script type="module" src="./main/index.js"></script>
+
+<div id="outputid"></div>
+<div id="confirmation_popup">
+    <div>
+        <label id="confirmation_text" >Confirmation Text</label>
+        
+    </div>
+    
+    <div class="confirmation_btns">
+        <button id="confirm_btn" class="con_bt">Confirm</button>
+        <button id="cancel_btn" class="con_bt">Cancel</button>
+    </div>
+</div>
+
+<script type="module" src="main/index.js"></script>
 </body>
 </html>
