@@ -824,13 +824,20 @@ function makeRed(){
                 document.getElementById(idss).classList.toggle('selected');
             }
         }
+        console.log('selected seat kaj korse');
+        document.getElementById('selected_seats').style.display = 'block';
+        document.getElementById('selected_seats').innerText = "selected seat(s): " + ss.join(", ");
         
     }
 
 }
-
-setTimeout(makeRed,1000);
-
+function callMakeRed(){
+    if(localStorage.getItem('selected_seats')){
+        makeRed();
+    }else{
+        setTimeout(callMakeRed,3000);
+    }
+}
 callRetrieveData();
 
 
@@ -844,6 +851,7 @@ if(verifyTime()){
 function loadingHere(){
     if(document.readyState === 'complete'){
         console.log('loaded');
+        callMakeRed();
         if(localStorage.getItem('loadinghere') === 'once'){
             localStorage.setItem('loadinghere','');
             location.reload();
@@ -892,3 +900,4 @@ setTimeout(()=>{
 
 window.addEventListener('load',onLoadFn)
 window.addEventListener('scroll', scrollPosLive);
+
