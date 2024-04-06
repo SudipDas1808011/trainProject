@@ -151,7 +151,8 @@ form.addEventListener('submit', (event) => {
   
   // Validate that from-station and to-station fields are different
   if (fromStationField.value.toLowerCase() === toStationField.value.toLowerCase()) {
-    alert('From Station and To Station must be different.');
+    document.getElementById('er1').innerHTML = "<b>! Stations Must be Different <br></b>";
+    //alert('From Station and To Station must be different.');
     return;
   }
   
@@ -180,6 +181,7 @@ form.addEventListener('submit', (event) => {
     try{
       parent.location.href = '../index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
     }catch(e){
+      console.error("error: "+e);
       window.location.href = '../index.html?journey='+fromStationField.value+","+toStationField.value+","+journeyDateField.value;
     }
 

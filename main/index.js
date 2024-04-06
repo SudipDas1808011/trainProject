@@ -81,7 +81,17 @@ let fareVar;
 let departTimeVar;
 let userJourneyDateVar;
 let journeyDateId = parseInt(journeyData[2].replace(/-/g,""));
-
+let userMail;
+function setUserMail(data){
+    userMail = data;
+}
+function getUsermail(){
+    if(isValid(userMail)){
+        return userMail;
+    }else{
+        return "";
+    }
+}
 function setUserBookedFn(data){
     userBookedVar = data;
 }
@@ -228,11 +238,12 @@ function genSeat(){
 }
 var isShowClicked = false;
 function hide_container(){
+    //here to get email from server 
+    // fetchdataonce
     isShowClicked = true;
     setTimeout(() => {
         window.scrollTo(0,scrollValue);
     }, 10);
-    
     let cn_div_id = document.getElementById('containerdiv');
     cn_div_id.style.display = "none";
     document.getElementById('hide').style.display = "none";
@@ -244,7 +255,6 @@ function gotoSearch(){
     const myDiv = document.getElementById('iframe');
     myDiv.scrollIntoView({ behavior: 'smooth' });
     let cn_div_id = document.getElementById('containerdiv');
-    
     cn_div_id.style.cssText="display: flex;flex-wrap: wrap;align-items: flex-start;align-content: flex-start;";
     document.getElementById('dropdown-btn').style.display = "none";
     document.getElementById('hide').style.display = "block";
@@ -313,6 +323,7 @@ const sN_inforCollect = 5;
 const sN_allocatedLeftStation = 6;
 const sN_extraSeats = 7;
 const sN_selectedSeatServer = 8;
+const sN_userMail = 9;
 var journeyCombinationFromUrl = journeyData[0]+"to"+journeyData[1];
 
 var journeyCombinationVar = [];
@@ -385,6 +396,8 @@ function fetchDataOnce(path,serial) {
                 else if(serial == 8){//selected seat server
                 setSelectedSeatServerFn(snapshot.val());
                 resolve(); // Resolve the promise when the operation is completed
+                }else if(serial == 9){
+                    setUserMail(snapshot.val().email);
                 }
             }else {
                 //console.error("snapshot not exists for serial: "+serial);
@@ -520,7 +533,7 @@ function confirmation_popup(remTimeForBooking){
                 return remTimeForBooking;
             }
             conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Confirm Your Booking?</u></h1><h2 align='center' style='color:blue;'>Remaining Time: "+Math.floor(remTimeForBooking/1000)+" seconds </h1>";
-            document.getElementById('table').innerHTML="<tr><th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+selectedSeatLocal+"</td></tr><tr><th>Total Fare </th><td>BDT "+selectedSeatLocal.length*getFareUnitVarFn()+"</td></tr>";
+            document.getElementById('table').innerHTML="<tr><th>Passenger</th><td>"+getUsermail()+"</td></tr><tr>"+"<th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+selectedSeatLocal+"</td></tr><tr><th>Total Fare </th><td>BDT "+selectedSeatLocal.length*getFareUnitVarFn()+"</td></tr>";
             remTimeForBooking -= 1000;     
         }
         const interValId = setInterval(remCheck,1000);
@@ -547,6 +560,8 @@ function makeGreenSelectedSeatLocalFn(){
 document.getElementById('hide').addEventListener('click',hide_container);
 document.getElementById('dropdown-btn').addEventListener('click',gotoSearch);
 document.getElementById('bookBtn').addEventListener('click',()=>{
+    let pathUsersVar = "users/"+sessionStorage.getItem('uidToken');
+    fetchDataOnce(pathUsersVar,sN_userMail);
     if(selectedSeatLocal.length>0){
         var dnow = new Date();
         var  nowTime = dnow.getTime();
@@ -1190,7 +1205,6 @@ if(journeyDateId < todayDateId()){
 }
 gotoSearch();
 window.addEventListener('scroll', scrollPosLive);
-
 
 
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+    
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script>
+    <script >
+// Default export is a4 paper, portrait, using millimeters for units
+
+var columns = ["Properties", "Value"];
+var rows = [
+    ["From", "station1"],
+    ["To", "station2"],
+    ["Date of Journey", "2024-04-06"],
+    ["Total Fare", "300"],
+];
+
+// Only pt supported (not mm or in)
+try{    
+    var doc = new jsPDF('p', 'pt');
+    doc.autoTable(columns, rows);
+    doc.save('table.pdf');
+    throw "failed to save pdf";
+}catch(error){
+    alert(error);
+}
+
+    </script>
+
+    
+
+
+
+ 
+    
+    
+</body>
+</html>

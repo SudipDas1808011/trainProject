@@ -29,12 +29,6 @@ body {
     padding-top: 15px;
     box-sizing: border-box;    
 }
-.parent_container{
-    
-    /* border:15px solid rgb(218, 208, 208);   */
-    
-         
-}
 
 .content {
     box-sizing: border-box;
@@ -99,7 +93,6 @@ body {
     border-radius: 5px;
     background-color: green;
     cursor: pointer;
-    
 
 }
 
@@ -391,5 +384,5 @@ th{
 
   /*-- media screen */
 @media only screen and (min-width: 960px){
-
+    
 }
