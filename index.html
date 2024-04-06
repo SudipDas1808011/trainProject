@@ -92,13 +92,108 @@
         <label id="confirmation_text" >Confirmation Text</label>
         
     </div>
+    <div>
+        <table id="table" border="1"></table>
+    </div>
     
     <div class="confirmation_btns">
         <button id="confirm_btn" class="con_bt">Confirm</button>
         <button id="cancel_btn" class="con_bt">Cancel</button>
     </div>
 </div>
-
 <script type="module" src="main/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script>
+<script>
+    function generatePdf(){
+        var columns = ["Properties", "Value"];
+        function testFn(){
+        // Get all <tr> elements
+                const trElements = document.querySelectorAll('tr');
+                var valuesArray = []
+                var thList = [];
+                var tdList = [];
+                // Iterate over each <tr> element
+                trElements.forEach(tr => {
+                    // Get all <td> elements inside this <tr>
+                    const tdElements = tr.querySelectorAll('td');
+                    const thElements = tr.querySelectorAll('th');
+
+                    // Iterate over each <td> element
+                    thElements.forEach(th => {
+                        // Get the text content of the <td>
+                        const thValue = th.textContent.trim();
+                        thList.push(thValue); // Output the value
+                    });
+                    tdElements.forEach(td => {
+                        // Get the text content of the <td>
+                        const tdValue = td.textContent.trim();
+                        tdList.push(tdValue);
+                    });
+
+                });
+                for(let i=0;i<tdList.length;i++){
+                    let tmp = [thList[i],tdList[i]];
+                    valuesArray.push(tmp);
+                }
+                console.log(valuesArray);
+                return valuesArray;
+
+    }
+// Usage example:
+const rows = testFn();
+//alert(tableData); // Output the table data as an array of objects
+
+try{    
+    var doc = new jsPDF('p', 'pt');
+    doc.autoTable(columns,rows);
+    doc.save('table.pdf');
+    throw "failed to save pdf";
+}catch(error){
+    cosnole.error("Failed to Generate Pdf");
+}
+        
+    }
+    
+    document.getElementById('confirm_btn').addEventListener('click',generatePdf);
+    
+</script>
+<script>
+    // function testFn(){
+    //     // Get all <tr> elements
+    //     const trElements = document.querySelectorAll('tr');
+    //     var valuesArray = []
+    //     var thList = [];
+    //     var tdList = [];
+    //     // Iterate over each <tr> element
+    //     trElements.forEach(tr => {
+    //         // Get all <td> elements inside this <tr>
+    //         const tdElements = tr.querySelectorAll('td');
+    //         const thElements = tr.querySelectorAll('th');
+
+    //         // Iterate over each <td> element
+    //         thElements.forEach(th => {
+    //             // Get the text content of the <td>
+    //             const thValue = th.textContent.trim();
+    //             thList.push(thValue); // Output the value
+    //         });
+    //         tdElements.forEach(td => {
+    //             // Get the text content of the <td>
+    //             const tdValue = td.textContent.trim();
+    //             tdList.push(tdValue);
+    //         });
+
+    //     });
+    //     for(let i=0;i<tdList.length;i++){
+    //         let tmp = [thList[i],tdList[i]];
+    //         valuesArray.push(tmp);
+    //     }
+    //     console.log(valuesArray);
+    //     return valuesArray;
+
+    // }
+    //document.getElementById('hide').addEventListener('click',testFn);
+</script>
+
 </body>
 </html>
