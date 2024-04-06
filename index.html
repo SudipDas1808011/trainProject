@@ -142,9 +142,10 @@ const rows = testFn();
 //alert(tableData); // Output the table data as an array of objects
 
 try{    
+    var d = new Date();
     var doc = new jsPDF('p', 'pt');
     doc.autoTable(columns,rows);
-    doc.save('table.pdf');
+    doc.save('ticket_'+d.getTime()+'.pdf');
     throw "failed to save pdf";
 }catch(error){
     cosnole.error("Failed to Generate Pdf");
