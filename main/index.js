@@ -296,14 +296,11 @@ function deletePreviousFn(path){
             
             var dateIds = snapshot.val();
             
-            for(const it in dateIds){
-                ////////////////console.log(it);
+            for(const it in dateIds){             
                 
-                if(it < todayDateId()){
-                    set(ref(database,path),{
-                        [it]:null
-                    })
-                    
+                if(parseInt(it) < parseInt(todayDateId())){
+                    set(ref(database,path+"/"+it),{
+                    })  
                 }
             }
         }
