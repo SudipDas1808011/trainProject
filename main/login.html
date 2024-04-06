@@ -104,7 +104,12 @@
       const auth = getAuth(app);
       const database = getDatabase(app);
 
- 
+      function setZoom(){
+        document.body.style.zoom = 1.25;
+      }
+      setZoom();
+
+
       var btnid = document.getElementById('submitbtnid');
       btnid.addEventListener('click',function(){
         

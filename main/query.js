@@ -24,6 +24,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+function setZoom(){
+  document.body.style.zoom = 1.25;
+}
+// Check if the document is inside an iframe
+if (window.self !== window.top) {
+  console.log('Document is inside an iframe.');
+} else {
+  setZoom();
+}
 
 function logout(){
   localStorage.clear();
