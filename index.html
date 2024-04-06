@@ -154,11 +154,11 @@ try{
     // Create a temporary anchor element
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "document.pdf"; // Set the desired file name
+    a.download = "ticket_"+d.getTime()+".pdf"; 
 
     // Trigger a click event on the anchor element
     a.click();
-    doc.save('ticket_'+d.getTime()+'.pdf');
+    //doc.save('ticket_'+d.getTime()+'.pdf');
     throw "failed to save pdf";
 }catch(error){
     cosnole.error("Failed to Generate Pdf");
