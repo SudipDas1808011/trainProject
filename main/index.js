@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
 import {getAnalytics} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+
 import {getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 import {
     getDatabase,
@@ -63,7 +64,7 @@ const trainName = "train1";
 let availableTrains = ['Train1','Train2'];
 
 //============= variables=============
-const seatTimeLimit = 20; //seconds
+const seatTimeLimit = 120; //seconds
 var curPos = "";
 var selectedSeatLocal = []; //variable
 var bookedSeatsVar = []; //variable
@@ -152,7 +153,7 @@ function getRandomNumber(min, max) {
 
 // // Generate a random number between 1 and 3000
 // const randomNumber = getRandomNumber(1, 3000);
-// console.log("random:"+randomNumber); // Output the random number
+// ////////////////console.log("random:"+randomNumber); // Output the random number
 
 function verifyTime() {
     let currentTimeIn12fmt = t_12hr();
@@ -166,8 +167,8 @@ function verifyTime() {
     var departTimeofCrntTrainIn24fmt = convertTo24Hour(departTimeofCrntTrainIn12fmt);
     var currentTimeIn24fmt = convertTo24Hour(currentTimeIn12fmt);
 
-    //console.log("dept time:" + departTimeofCrntTrainIn24fmt);
-    //console.log("cur time:" + currentTimeIn24fmt);
+    //////////////////console.log("dept time:" + departTimeofCrntTrainIn24fmt);
+    //////////////////console.log("cur time:" + currentTimeIn24fmt);
 
     var intValueJourney = parseInt(jouneyDateID);
     var formattedDateNow = parseInt(curFullDateId());
@@ -188,11 +189,14 @@ function verifyTime() {
         //isTicketAvail = isTicketAvail && (!isLeft);
         isTicketAvail =  (!isLeft);
     }
-    //console.log('ticket can be purchased?: ' + isTicketAvail);
+    //////////////////console.log('ticket can be purchased?: ' + isTicketAvail);
     return isTicketAvail;
 }
 var myUniqueId = generateUniqueId();
-console.log(myUniqueId);
+////////////////console.log(myUniqueId);
+// Function to download HTML table as PDF
+
+
 
 
 function genSeat(){
@@ -283,7 +287,7 @@ function deletePreviousFn(path){
             var dateIds = snapshot.val();
             
             for(const it in dateIds){
-                console.log(it);
+                ////////////////console.log(it);
                 
                 if(it < todayDateId()){
                     set(ref(database,path),{
@@ -319,7 +323,7 @@ function fetchDataOnce(path,serial) {
     return new Promise((resolve, reject) => {
         get(child(dbRef, path)).then((snapshot) => {
             if (snapshot.exists()) {
-                //console.log(snapshot.val());
+                //////////////////console.log(snapshot.val());
                 if(serial == 1){//allocated Seat comment
                     setAllocatedSeatsValFn(snapshot.val().seats);
                     amountOfSeatsVar = snapshot.val().length;
@@ -327,7 +331,7 @@ function fetchDataOnce(path,serial) {
                 }
                 else if(serial == 2){//booked seats comment
                     setBookSeatsValFn(snapshot.val());
-                    console.log("alkfjlskjfl;ak: "+typeof(snapshot.val()));
+                    ////////////////console.log("alkfjlskjfl;ak: "+typeof(snapshot.val()));
                     let tp = snapshot.val();
                     let utp = [... new Set(tp)];
                     utp.sort();
@@ -341,7 +345,7 @@ function fetchDataOnce(path,serial) {
                 else if (serial == 4){//destination station
                     var obj = snapshot.val();
                     const stidNow = parseInt(journeyData[0].match(/\d+/));//stidNow --> from which station passenger goes
-                    //console.log(typeof(stidNow));
+                    //////////////////console.log(typeof(stidNow));
                     for(const it in obj){
                         var stidbooked = parseInt(obj[it].match(/\d+/));//stidbooked--> stationId of booked seat. the seat contain which station
                         
@@ -383,7 +387,7 @@ function fetchDataOnce(path,serial) {
                 resolve(); // Resolve the promise when the operation is completed
                 }
             }else {
-                console.error("snapshot not exists for serial: "+serial);
+                //console.error("snapshot not exists for serial: "+serial);
                 if(serial == 8){
                     selectedSeatServerVar = {};
                 }
@@ -396,7 +400,7 @@ function fetchDataOnce(path,serial) {
                 resolve(); // Resolve the promise even if no data is available
             }
         }).catch((error) => {
-            console.error(error);
+            //console.error(error);
             reject(error); // Reject the promise if an error occurs
         });
     });
@@ -412,9 +416,9 @@ let pathToShow = 'trainInfo/'+trainName+'/'+up_down;
 fetchDataOnce(pathToShow,5) //trainInfo
     .then(()=>{
         
-        //console.log("position: "+curPosVar);
-        console.log("OffDay: "+offDayVar);
-        console.log("Fare: " +fareVar);
+        //////////////////console.log("position: "+curPosVar);
+        ////////////////console.log("OffDay: "+offDayVar);
+        ////////////////console.log("Fare: " +fareVar);
 
         let jd = parseInt(journeyData[2].split('-')[2]);
                 let gap = jd - dateNow.getDate();
@@ -422,7 +426,7 @@ fetchDataOnce(pathToShow,5) //trainInfo
                 let journey_idx = dateNow.getDay()+journeyDateId-parseInt(todayDateId());
 
                 if(journey_idx>6){journey_idx -=7;}
-                console.log('ji: '+journey_idx);
+                ////////////////console.log('ji: '+journey_idx);
                 
                 if (offDayVar.toLowerCase() === daysInWeek[journey_idx].toLowerCase()) {                                                                           
                     var element = document.querySelector('.content');
@@ -515,7 +519,8 @@ function confirmation_popup(remTimeForBooking){
                 clickCancelBtnFn();
                 return remTimeForBooking;
             }
-            conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Confirm Your Booking?</u></h1><h2 align='center' style='color:blue;'>Remaining Time: "+Math.floor(remTimeForBooking/1000)+" seconds </h1><table id='table' border=1><tr><th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+selectedSeatLocal+"</td></tr><tr><td>Total Fare </td><td>৳"+selectedSeatLocal.length*getFareUnitVarFn()+"</td></tr>";
+            conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Confirm Your Booking?</u></h1><h2 align='center' style='color:blue;'>Remaining Time: "+Math.floor(remTimeForBooking/1000)+" seconds </h1>";
+            document.getElementById('table').innerHTML="<tr><th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+selectedSeatLocal+"</td></tr><tr><th>Total Fare </th><td>BDT "+selectedSeatLocal.length*getFareUnitVarFn()+"</td></tr>";
             remTimeForBooking -= 1000;     
         }
         const interValId = setInterval(remCheck,1000);
@@ -622,7 +627,7 @@ document.getElementById('confirm_btn').addEventListener('click',()=>{
 
                     //let user_already_Booked = localStorage.getItem('userBooked');
                     let user_already_Booked = userBookedVar;
-                    console.log("user already booked: "+ user_already_Booked);
+                    //////////////////console.log("user already booked: "+ user_already_Booked);
                     
                     if(isValid(user_already_Booked)){
                         userBooked = user_already_Booked.concat(bookable_seats);
@@ -643,6 +648,7 @@ document.getElementById('confirm_btn').addEventListener('click',()=>{
                     }
                     update(ref(database, '/ticketContainer/' + jouneyDateID + "/" + trainName + "/" + up_down), updates);
                     update(ref(database, '/users/' + sessionStorage.getItem('uidToken')), updatesUser);
+                    
                     alert('update successful');
                     localStorage.setItem('selected_seats', '');
                     location.reload();
@@ -693,7 +699,7 @@ function makeYellowAllSelectedSeatsFn(){
     } 
 }
 function printSel(){
-    console.log(selectedSeatServerVar);
+    //////////////////console.log(selectedSeatServerVar);
 }
 
 //---------- getter-setter --------------------
@@ -710,7 +716,7 @@ function setExtraSeatsFn(data){
     extraSeatsVar = data;
 }
 function setSelectedSeatServerFn(data){
-    //console.log("typeOfSelected: "+typeof(data));
+    ////////////////////console.log("typeOfSelected: "+typeof(data));
     selectedSeatServerVar = data;
 }
 
@@ -721,14 +727,14 @@ function updateSelectedSeatServerFn(){
         let updateSelectedSeatServer = {
             [up_down]: selectedSeatServerVar,
         }  
-        //console.log(selectedSeatServerVar);    
+        ////////////////////console.log(selectedSeatServerVar);    
         let pathUpdateSelectedSeatsVar = "selected_seats/"+jouneyDateID+"/"+trainName+"/";
         update(ref(database, pathUpdateSelectedSeatsVar), updateSelectedSeatServer)
             .then(()=>{
                 resolve();
             })
             .catch((error)=>{
-                console.error(error);
+                //console.error(error);
                 reject(error);
             })
         
@@ -741,17 +747,30 @@ function deSelectOperationFn(seatValue){
     if(idxSelectedSeatLocal != -1){
         selectedSeatLocal.splice(idxSelectedSeatLocal,1);
     }else{
-        console.error("cant delete selectedSeatLocal value");
-        alert("cant delete selectedSeatLocal value");
+        //console.error("cant delete selectedSeatLocal value");
+        //alert("cant delete selectedSeatLocal value");
     }
+}
+function makeRedSingleSeat(thisId){
+    return new Promise((resolve,reject)=>{
+        thisId.style.backgroundColor = "red";
+        thisId.style.color = "white";
+        if(thisId.style.backgroundColor != "red" || thisId.style.color != "white"){
+            makeGrayBookedSeats(thisId);
+        }else{
+            resolve(1);
+        }
+    })
+    
 }
 function selectedSeatOp(){
     const allSeats = document.querySelectorAll(".seat");
     for (let i = 0; i < allSeats.length; i++) {
-        allSeats[i].addEventListener("click", function () {                           
+        allSeats[i].addEventListener("click", function () {      
+        startOverlay();         
         const computedStyle = window.getComputedStyle(allSeats[i]);
         const color = computedStyle.getPropertyValue('background-color');
-        //console.log(color);
+        //////////////////console.log(color);
         const isGray = color === 'rgb(128, 128, 128)';
         const isRed = color === 'rgb(255, 0, 0)';
         const isGreen = color === 'rgb(0, 128, 0)';
@@ -759,7 +778,7 @@ function selectedSeatOp(){
         
         
         if(isGray){
-            console.log("unavailable");
+            ////////////////console.log("unavailable");
         }else if(isRed){
             
             
@@ -772,17 +791,17 @@ function selectedSeatOp(){
                     .then(()=>{
                         allSeats[i].style.backgroundColor = "green";
                         allSeats[i].style.color = "black";
-                        console.log("selectedSeats: "+selectedSeatLocal);
+                        ////////////////console.log("selectedSeats: "+selectedSeatLocal);
                         
                     })
                     .catch((error)=>{
-                        console.error(error);
+                        //console.error(error);
                     })
             }
         }else if(isYellow){
             document.getElementById(this.id).style.backgroundColor = "green";
             document.getElementById(this.id).style.color = "black";
-            console.log("wait for sometime");
+            ////////////////console.log("wait for sometime");
             deSelectOperationFn(allSeats[i].value);
 
             //deSelectOperationFn(allSeats[i].value);            
@@ -796,10 +815,10 @@ function selectedSeatOp(){
             let remSeat = 4-(selectedSeatLocal.length+userBookedVar.length);
             if(remSeat || 1){
                 
-                //console.log("remaining seat: "+(4-(selectedSeatLocal.length+userBookedVar.length)));
+                //////////////////console.log("remaining seat: "+(4-(selectedSeatLocal.length+userBookedVar.length)));
                 
                 let pathSelectedSeatsVar = "selected_seats/"+jouneyDateID+"/"+trainName+"/"+up_down;
-                //console.error(pathSelectedSeatsVar);
+                ////console.error(pathSelectedSeatsVar);
                 let randomNumNow = getRandomNumber(1,3000);
                 //alert(randomNumNow);
                                     function blinkButton() {
@@ -818,7 +837,7 @@ function selectedSeatOp(){
                                     }
                                     
                                     // Call the function to start blinking the button
-                                    //blinkButton();
+                                    blinkButton();
                 
                 setTimeout(() => {
                     fetchDataOnce(pathSelectedSeatsVar,8)
@@ -836,13 +855,17 @@ function selectedSeatOp(){
                                         .then(()=>{
                                             const postTimeStamp = selectedSeatServerVar[this.id];
                                             if(prevTimeStamp == postTimeStamp){
-                                                                                                
-                                                allSeats[i].style.backgroundColor = "red";
-                                                allSeats[i].style.color = "white";
-                                                selectedSeatLocal.push(allSeats[i].value);
-                                                console.log("selectedSeats: "+selectedSeatLocal);
+                                                //makeRed from Green
+                                                makeRedSingleSeat(allSeats[i])
+                                                    .then((resVal)=>{
+                                                        
+                                                        selectedSeatLocal.push(allSeats[i].value);
+                                                        ////////////////console.log("selectedSeats: "+selectedSeatLocal);
+                                                        
+                                                        ////////////////console.log(randomNumNow);
+                                                    })                           
                                                 
-                                                console.log(randomNumNow);
+                                                
                                             }else{
                                                 makeYellow(allSeats[i].value);
                                             }
@@ -851,16 +874,18 @@ function selectedSeatOp(){
                                     //alert(selectedSeatServerVar[this.id]);
                                 })
                                 .catch((error)=>{
-                                    console.error(error);
+                                    alert(error);
                                 })
                             
                         }else{// this seat is clicked by someone
                             var d = new Date();
                             var gapTime = (d.getTime() - selectedSeatServerVar[this.id])/1000;
-                            console.log(gapTime);
+                            ////////////////console.log(gapTime);
                             if(gapTime > seatTimeLimit){
-                                delete selectedSeatServerVar[this.id];                                
-                                updateSelectedSeatServerFn();                                
+                                delete selectedSeatServerVar[this.id]; 
+                                //alert('clicked by someone');                        
+                                updateSelectedSeatServerFn();    
+                                document.getElementById(this.id).click();                           
                                               
                             }else{
                                 makeYellow(allSeats[i].value);
@@ -871,16 +896,19 @@ function selectedSeatOp(){
                         
                     })
                     .catch((error)=>{
-                        console.error("selectedSeat Error: "+error);
+                        //console.error("selectedSeat Error: "+error);
                     })
                 }, randomNumNow);
                 
-
+                
 
             }else{
                 alert("Your Quota is Fulfilled");
             }
         }
+        
+    
+        stopOverlay();
     });
 }
 }
@@ -888,23 +916,23 @@ function selectedSeatOp(){
 let path_allocatedSeats = "trainInfo/train1/up/seatInfo/lists/"+fromStationID;//variable
 fetchDataOnce(path_allocatedSeats,1)
     .then(()=>{
-        console.log("allocated seats fetched successful");
-        console.log("Seat Amount: "+amountOfSeatsVar);
+        ////////////////console.log("allocated seats fetched successful");
+        ////////////////console.log("Seat Amount: "+amountOfSeatsVar);
         makeGreenAlct();
     })
     .catch((error)=>{
-        console.error("allocated seat error: "+error);
+        //console.error("allocated seat error: "+error);
     });
 
 
 let path_bookedSeats = "ticketContainer/"+jouneyDateID+"/"+trainName+"/"+up_down+"/booked_seats"; //variable
 fetchDataOnce(path_bookedSeats,2)
     .then(()=>{
-        console.log("booked seats fetched successful");
+        ////////////////console.log("booked seats fetched successful");
         makeGrayBookedSeats();
     })
     .catch((error)=>{
-        console.error("allocated seat error: "+error);
+        //console.error("allocated seat error: "+error);
     });
 function makeGraySingleSeatFn(thisId){
     document.getElementById(thisId).style.color = "black";
@@ -913,7 +941,7 @@ function makeGraySingleSeatFn(thisId){
 onValue(ref(database,path_bookedSeats),(snapshot)=>{
     if(snapshot.exists()){
         bookedSeatsVar = snapshot.val();
-        console.log("booked seats fetched successful onValue");
+        ////////////////console.log("booked seats fetched successful onValue");
         //setBookSeatsValFn(snapshot.val());
         fetchDataOnce(pathForCurPos,5)
             .then(()=>{//get train position
@@ -933,11 +961,11 @@ onValue(ref(database,path_bookedSeats),(snapshot)=>{
     }
 });
 let pathUserBooked = "users/"+sessionStorage.getItem("uidToken");
-    //console.log(pathUserBooked);
+    //////////////////console.log(pathUserBooked);
     fetchDataOnce(pathUserBooked,3)
         .then(()=>{
-            console.log("userBookedFetched sucess");
-            console.log("user already booked: "+ userBookedVar);
+            ////////////////console.log("userBookedFetched sucess");
+            ////////////////console.log("user already booked: "+ userBookedVar);
             if( todayDateId() > userJourneyDateVar){
                 var updateData = {
                     userBooked : null
@@ -946,17 +974,23 @@ let pathUserBooked = "users/"+sessionStorage.getItem("uidToken");
             }
         })
         .catch((error)=>{
-            console.error("userBookedError: "+error);
+            //console.error("userBookedError: "+error);
         })
         
 genSeat();
 selectedSeatOp();
-function startOverlay(){
+function stopOverlay(){
     setTimeout(()=>{
         document.getElementById('overlay').style.display = "none";
-      },2000);
+      },3000);
 }
-startOverlay();
+function startOverlay(){
+    
+    document.getElementById('overlay').style.display = "block";
+      
+}
+
+stopOverlay();
 
 let pathStDest = "mapSeatToStation/"+jouneyDateID+"/"+trainName+"/"+up_down;
 fetchDataOnce(pathStDest,4)
@@ -966,10 +1000,10 @@ fetchDataOnce(pathStDest,4)
             const idGreen = document.getElementById(destSeatVar[it]);
             idGreen.style.backgroundColor = "green";
         }
-        console.log("destinationSeat green fetched succesful");
+        ////////////////console.log("destinationSeat green fetched succesful");
     })
     .catch((error)=>{
-        console.log("problem during destination seat feting: "+error);
+        ////////////////console.log("problem during destination seat feting: "+error);
     })
 onValue(ref(database,pathStDest),(snapshot)=>{
     if(snapshot.exists()){
@@ -999,20 +1033,20 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
         
         curPosVar = snapshot.val().currentPos;
         let pathForLeftAllocated = "trainInfo/"+trainName+"/"+up_down+"/seatInfo/lists/"+(curPosVar);
-        console.log("TrainPosition: "+curPosVar);        
+        ////////////////console.log("TrainPosition: "+curPosVar);        
         currentPositionUpdateVar++;
-        console.error("currentPositionUpdate: "+currentPositionUpdateVar);
+        //console.error("currentPositionUpdate: "+currentPositionUpdateVar);
         // after train left
                 
         fetchDataOnce(pathForExtraSeats,7)
             .then(()=>{
-                //console.log("extraSeats: "+extraSeatsVar);
+                //////////////////console.log("extraSeats: "+extraSeatsVar);
                 
                 fetchDataOnce(pathForLeftAllocated,6)
                     .then(()=>{
-                        //console.log("leftAllocation: "+allocatedSeatsLeftStationVar);
-                        //console.log("booked: "+bookedSeatsVar);
-                        console.log("curpos: "+curPosVar+"->"+allocatedSeatsLeftStationVar);
+                        //////////////////console.log("leftAllocation: "+allocatedSeatsLeftStationVar);
+                        //////////////////console.log("booked: "+bookedSeatsVar);
+                        ////////////////console.log("curpos: "+curPosVar+"->"+allocatedSeatsLeftStationVar);
                         
                         let tmpExtraSeats = [];
                         for(var it in allocatedSeatsLeftStationVar){
@@ -1026,8 +1060,8 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                             extraSeatsVar = tmpExtraSeats;
                         }
                         
-                        //console.log("ExtraSeats: "+extraSeatsVar);
-                        console.log("type:"+typeof(extraSeatsVar));
+                        //////////////////console.log("ExtraSeats: "+extraSeatsVar);
+                        ////////////////console.log("type:"+typeof(extraSeatsVar));
 
                         //update extra seats
                         let pathForUpdateExtraSeats = "extraTickets/"+todayDateId()+"/"+trainName+"/"+up_down;
@@ -1035,7 +1069,7 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                             extraseats:extraSeatsVar
                         }
                         if(curPosVar == totalStationVar-2){
-                            console.log("Unsold Seats: "+extraSeatsVar);
+                            ////////////////console.log("Unsold Seats: "+extraSeatsVar);
                         }
                         if(curPosVar == -1 || curPosVar >=totalStationVar-1){
                              updateExtra = {
@@ -1055,7 +1089,7 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                     })
             })
             .catch((error)=>{
-                console.error("extraSeats Error: "+error);
+                //console.error("extraSeats Error: "+error);
             })
 
         if(todayDateId()===jouneyDateID){
@@ -1065,7 +1099,7 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                 unavailable();               
             }else{
                 if(curPosVar>=0 && curPosVar<snapshot.val().stations.length){
-                    console.log(snapshot.val().stations);
+                    ////////////////console.log(snapshot.val().stations);
                     document.getElementById('left_station').innerText = "Left from : "+snapshot.val().stations[curPosVar];
                     document.getElementById('left_station').style.setProperty("font-size","27px");
                     document.getElementById('left_station').style.setProperty("background-color","red");
@@ -1110,7 +1144,7 @@ onValue(ref(database,pathUpdateSelectedSeatsOnValueVar),(snapshot)=>{
     for(const it in selectedSeatLocal){
         if(!selectedSeatServerVar[selectedSeatLocal[it]]){
             
-            console.log("onValue Selected Seat:\n"+selectedSeatLocal[it]);
+            ////////////////console.log("onValue Selected Seat:\n"+selectedSeatLocal[it]);
             document.getElementById(selectedSeatLocal[it]).style.backgroundColor = "green";
             document.getElementById(selectedSeatLocal[it]).style.color = "black";
             deSelectOperationFn(selectedSeatLocal[it]);
@@ -1122,7 +1156,7 @@ onValue(ref(database,pathUpdateSelectedSeatsOnValueVar),(snapshot)=>{
 //     fetchDataOnce(pathUpdateSelectedSeatsOnValueVar,8)
 //     .then(()=>{
 //         cnt++;
-//         console.log("count: "+cnt);
+//         ////////////////console.log("count: "+cnt);
 //         var d = new Date();
 //         //var gap = (d.getTime() - selectedSeatServerVar["A-19"])/(1000);
 //         for(var it in selectedSeatServerVar){
@@ -1135,7 +1169,7 @@ onValue(ref(database,pathUpdateSelectedSeatsOnValueVar),(snapshot)=>{
 //                         updateSelectedSeatServerFn();
 //                     }) 
 //                     .catch((error)=>{
-//                         console.error("colorChange Error: "+error);
+//                         //console.error("colorChange Error: "+error);
 //                     })              
 //             }
 //         }
@@ -1143,7 +1177,7 @@ onValue(ref(database,pathUpdateSelectedSeatsOnValueVar),(snapshot)=>{
         
 //     })
 //     .catch((error)=>{
-//         console.error("continuousSeatServer error: "+error);
+//         //console.error("continuousSeatServer error: "+error);
 //     })
 // }
 
@@ -1156,3 +1190,7 @@ if(journeyDateId < todayDateId()){
 }
 gotoSearch();
 window.addEventListener('scroll', scrollPosLive);
+
+
+
+
