@@ -145,6 +145,19 @@ try{
     var d = new Date();
     var doc = new jsPDF('p', 'pt');
     doc.autoTable(columns,rows);
+    // Save the PDF to a variable
+    var pdfData = doc.output();
+
+    // Create a Blob from the PDF data
+    var blob = new Blob([pdfData], { type: "application/pdf" });
+
+    // Create a temporary anchor element
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "document.pdf"; // Set the desired file name
+
+    // Trigger a click event on the anchor element
+    a.click();
     doc.save('ticket_'+d.getTime()+'.pdf');
     throw "failed to save pdf";
 }catch(error){
