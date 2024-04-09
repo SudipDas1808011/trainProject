@@ -30,7 +30,7 @@
         margin: 0 auto;
         padding-top: 15px;
         box-sizing: border-box;    
-        background-color: yellow;
+        
     }
     
     .content {
@@ -155,7 +155,9 @@
         color: white;
         
     }
-    
+    #back{
+        visibility: hidden;
+    }
     #bookBtn:hover {
         background-color: yellow;
         color: black;
@@ -217,7 +219,8 @@
     
     #iframe{
         height: 460px;
-        margin: 50px 0 0 50px;
+        margin-left: 20%;
+
         box-shadow: 0 0 10px rgb(8, 5, 5);
         border-radius: 8px;
         transform: scale(220%,200%);
@@ -414,7 +417,7 @@
     }
     body {
         font-size: 16px;
-        max-width: 720px;
+        max-width: 500px;
         margin: 10 auto;
         padding-top: 15px;
         box-sizing: border-box;    
@@ -427,9 +430,9 @@
         height: calc(100% - 30px);
     }
     .header {
-        position: fixed;
-      bottom: 40%;
-      right:0;
+      position: fixed;
+      bottom: 0;
+      left:0%;
       z-index: 9999;
       background-color: #ffffff;
       padding: 10px;
@@ -443,10 +446,13 @@
     .train {
         border: solid;
         border-radius: 10px;
+        margin-left: 4%;
+        background-color: #ffffff;
+        margin-bottom: 42%;
         box-sizing: border-box;
         position: fixed;
         display: grid;
-        grid-template-columns: repeat(1, 5fr);
+        grid-template-columns: repeat(1,fr);
         grid-gap: 50px;
         position: relative;
         align-items: center;
@@ -456,6 +462,7 @@
     .containerdiv{
         margin-top: 20%;
         margin-left: 15%;
+        margin-right: 15%;
         
         display: none;
         width:auto;
@@ -474,7 +481,7 @@
         }
     .seats{
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         
         }
     .seat {
@@ -486,7 +493,7 @@
         text-align: center;
         line-height: 60px;
         border-radius: 5px;
-        background-color: green;
+        background-color: rgb(255, 255, 255);
         cursor: pointer;
     
     }
@@ -502,8 +509,8 @@
         background-color: blueviolet;
         margin-top: 20px;
         margin-bottom: 20px;
-        margin-left: 18%;
-        margin-right: 18%;
+        margin-left: 1%;
+        
       color: white;
       font-size: 20px;
       font-weight: bold;
@@ -532,7 +539,7 @@
       font-size: 20px;
       font-weight: bold;
       padding: 10px 10px;
-        margin-left: 13%;
+        margin-left: 1%;
       border: none;
       border-radius: 45px;
       cursor: pointer;
@@ -587,8 +594,9 @@
     }
     
     #availableTrainId {
-        margin-top: 0;
-        margin-bottom: 10px;
+        margin-top:3%;
+        margin-right: 5%;
+        font-size: 20px;
         
     
     }
@@ -606,15 +614,24 @@
         font-size: 16px;
         box-sizing: border-box;
         box-shadow: 0 0 10px #1dcf26;
+        background-color: rgb(255, 255, 255);
+        margin-right: 2.5%;
     }
     
     #iframe{
-        height: auto;
+        height: 1px;
         
         margin-left:7%;
         box-shadow: 0 0 10px rgb(8, 5, 5);
         border-radius: 8px;
+        visibility: hidden;
         
+    }
+    #back{
+        visibility: visible;
+        font-size: 30px;
+        text-align: center;
+        font-weight: bold;
         
     }
     
@@ -657,6 +674,8 @@
     #confirmation_popup{
         width: auto;
         height: auto;
+        margin-left: 4%;
+        margin-top:4% ;
         background-color: rgba(255, 255, 255, 0.984);
         color: wheat;
         border: 5px solid green ;
@@ -666,10 +685,19 @@
         top: 0;
         border-radius: 25px;
         display: none;
-        
-    
-    
     }
+    table{
+        background-color: #ffffff;
+        margin-left: 4%;
+        margin-right:4%;
+        
+    }
+    tr{
+        font-size: 20px;
+        background-color: rgb(255, 255, 255);
+        
+    }
+    
     #heading_ct{
         color:red;
         font-family:monospace;
@@ -687,6 +715,7 @@
         z-index: 9999;
         padding: 1%;
     }
+   
     .confirmation_btns{
         background-color: #ccc;
         display: flex;

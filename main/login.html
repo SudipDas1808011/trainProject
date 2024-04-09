@@ -27,7 +27,7 @@
       }
       input[type="text"],
       input[type="password"] {
-        width: 70%;
+        width: 50%;
         padding: 10px;
         border-radius: 5px;
         border: 2px solid black;
@@ -51,12 +51,15 @@
         background-color: #3e8e41;
       }
       #msg{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);     
         background-image: url("res/train1.gif");
         height: 220px;
         width: 220px;
         display: none;
         flex-direction: column;
-        margin-left: 40%;
+        
       }
       #confirmation{
         background-color: red;
@@ -68,7 +71,7 @@
     <form>
       <h1>Login </h1>
       <label for="username">Email:</label>
-      <input type="text" id="username" name="username" placeholder="write your e-mail" required>
+      <input type="text" id="username" name="username" value="@gmail.com" placeholder="write your e-mail" required>
       
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" placeholder="password" required>

@@ -306,6 +306,7 @@ function deletePreviousFn(path){
         }
     })
 }
+
 deletePreviousFn("ticketContainer");
 deletePreviousFn("selected_seats");
 deletePreviousFn("mapSeatToStation");
@@ -452,7 +453,7 @@ fetchDataOnce(pathToShow,5) //trainInfo
                     unavailableOFFDayFn();
                 } else {
                     let trainNameCap = availableTrains[0].toString().charAt(0).toUpperCase()+availableTrains[0].toString().slice(1);                            
-                    document.getElementById('containerForAvalaibleTrain').innerText = trainNameCap + " is available today";
+                    document.getElementById('containerForAvalaibleTrain').innerHTML = trainNameCap;
                     let journeyDataIdWet = document.getElementById('journey-data');
                     journeyDataIdWet.innerHTML = "From: " + journeyData[0] + "<br>To: " + journeyData[1] + "\nDate: " + journeyData[2] + "<br>";
                     journeyDataIdWet.innerHTML += "Day: " + daysInWeek[journey_idx] + "<br>";
