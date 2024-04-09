@@ -17,9 +17,9 @@
 
 <div class="parent_container">
     <div class="header" id="header">
-        <div><button id="bookBtn">Book Now</button></div>
-        <button id="dropdown-btn" class="dropdown-btn">Hide Seats</button>
-        <button id="hide" class="dropdown-btn">Show Seats</button>
+        <div><button id="bookBtn">Book</button></div>
+        <button id="dropdown-btn" class="dropdown-btn">HIDE</button>
+        <button id="hide" class="dropdown-btn">SHOW</button>
                 
         <div id="selected_seats" class="outputs"></div>
         <label id="left_station" class="outputs"></label>
@@ -76,13 +76,14 @@
 <div class="containerdiv" id="containerdiv">
 
     <div id="right">
-        <h1 id="availableTrainId"><br> Available Train<br> </h1>
-        <div id="containerForAvalaibleTrain" style="font-size:26px;font-weight: bold;margin-right: 5%;">
+        <h1 id="availableTrainId" ></h1>
+        <div id="containerForAvalaibleTrain" style="font-size:26px;font-weight: bold;margin-right: 2%;">
             <!-- add as many div elements as needed -->
         </div>
         <div id="journey-data" ></div>
     </div>
     <iframe src="main/query.html" id="iframe" ></iframe>
+    <br>
     <label id="back" > Press Back To Search</label>
 </div>
 
@@ -99,6 +100,7 @@
         <button id="cancel_btn" class="con_bt">Cancel</button>
     </div>
 </div>
+<script src="main/mobile.js"></script>
 <script type="module" src="main/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script>
@@ -206,6 +208,7 @@ try{
     // }
     //document.getElementById('hide').addEventListener('click',testFn);
 </script>
+
 
 </body>
 </html>
