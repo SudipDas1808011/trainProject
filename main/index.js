@@ -1130,8 +1130,6 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                     
                 }else if(parseInt(curPosVar) === snapshot.val().stations.length){
                     document.getElementById('left_station').innerText = "Train Reached its destination";
-                }else{
-                    document.getElementById('left_station').innerText = "Journey hasn\'t started yet";
                 }
             }
         }
