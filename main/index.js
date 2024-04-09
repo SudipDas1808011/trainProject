@@ -64,7 +64,7 @@ const trainName = "train1";
 let availableTrains = ['Train1','Train2'];
 
 //============= variables=============
-const seatTimeLimit = 1200; //seconds
+const seatTimeLimit = 120; //seconds
 var curPos = "";
 var selectedSeatLocal = []; //variable
 var bookedSeatsVar = []; //variable
