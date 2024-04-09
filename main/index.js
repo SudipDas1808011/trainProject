@@ -1121,9 +1121,10 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                     document.getElementById('left_station').style.setProperty("background-color","red");
                     document.getElementById('left_station').style.setProperty("color","white");
                     document.getElementById('left_station').style.setProperty("position","fixed");
-                    document.getElementById('left_station').style.setProperty("right","0");
-                    document.getElementById('left_station').style.setProperty("padding-right","20px");
-                    document.getElementById('left_station').style.setProperty("border-radius","0");
+                    document.getElementById('left_station').style.setProperty("left","0");
+                    document.getElementById('left_station').style.setProperty("padding-right","2px");
+                    document.getElementById('left_station').style.setProperty("border","1px solid black");
+                    document.getElementById('left_station').style.setProperty("width","28vw");
                     //document.getElementById('left_station').style.setProperty("animation","blink 5s infinite");
 
                     
