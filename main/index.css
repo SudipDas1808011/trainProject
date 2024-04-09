@@ -417,7 +417,7 @@
     }
     body {
         font-size: 16px;
-        max-width: 500px;
+        max-width: 80vw;
         margin: 10 auto;
         padding-top: 15px;
         box-sizing: border-box;    
@@ -431,12 +431,12 @@
     }
     .header {
       position: fixed;
-      bottom: 0;
+      bottom: 25%;
       left:0%;
       z-index: 9999;
-      background-color: #ffffff;
+      background-color: rgba(255,255,255,0.1);
       padding: 10px;
-      box-shadow: 0 0 20px rgba(144, 182, 9, 0.5);
+      box-shadow: 0 0 20px rgba(231, 10, 183, 0.5);
       border-radius: 29px;
       flex-wrap: wrap;
       width: 150px;
@@ -616,6 +616,7 @@
         box-shadow: 0 0 10px #1dcf26;
         background-color: rgb(255, 255, 255);
         margin-right: 2.5%;
+        width: 50vw;
     }
     
     #iframe{
@@ -725,6 +726,8 @@
         height: 50px;
         gap: 100px;
         border-radius: 50px;
+        width: 50vh;
+        margin-left: 10%;
     }
     .con_bt{
         font-size: 25px;
