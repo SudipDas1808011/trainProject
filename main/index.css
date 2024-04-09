@@ -1,388 +1,781 @@
 *{
     box-sizing: border-box;
 }
-@keyframes blink {
-    0% {
-        opacity: .75;
+/*-- media screen for desktop % $ */
+@media only screen and (min-width: 721px){
+    @keyframes blink {
+        0% {
+            opacity: .75;
+        }
+        25% {
+            opacity:.25;
+            background-color: #1dcf26;
+        }
+        50% {
+            opacity:.5;
+            background-color: rgb(224, 17, 207);
+        }
+        75% {
+            opacity:.75;
+            background-color: blue;
+        }
+        100% {
+            opacity:1;
+            background-color: black;
+        }
     }
-    25% {
-        opacity:.25;
-        background-color: #1dcf26;
+    body {
+        font-size: 16px;
+        max-width: 900px;
+        margin: 0 auto;
+        padding-top: 15px;
+        box-sizing: border-box;    
+        background-color: yellow;
     }
-    50% {
-        opacity:.5;
-        background-color: rgb(224, 17, 207);
+    
+    .content {
+        box-sizing: border-box;
+        width: calc(100% - 30px);
+        height: calc(100% - 30px);
     }
-    75% {
-        opacity:.75;
-        background-color: blue;
-    }
-    100% {
-        opacity:1;
-        background-color: black;
-    }
-}
-body {
-    font-size: 16px;
-    max-width: 900px;
-    margin: 0 auto;
-    padding-top: 15px;
-    box-sizing: border-box;    
-}
-
-.content {
-    box-sizing: border-box;
-    width: calc(100% - 30px);
-    height: calc(100% - 30px);
-}
-.header {
-    position: fixed;
-  bottom: 40%;
-  right:0;
-  z-index: 9999;
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 0 20px rgba(144, 182, 9, 0.5);
-  border-radius: 29px;
-  flex-wrap: wrap;
-  width: 250px;
-  
-   
-}
-.train {
-    border: solid;
-    border-radius: 10px;
-    box-sizing: border-box;
-    position: fixed;
-    display: grid;
-    grid-template-columns: repeat(2, 5fr);
-    grid-gap: 100px;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    
-}
-.containerdiv{
-    margin-top: -20%;
-    display: none;
-    width:auto;
-    height: auto;
-    justify-content: center;
-    background-color: white;
-    transform:scale(75%,75%) ;
-}
-
-.coach {
-    margin: 0 10px;
-    font-size: x-large;
-    
-    }
-.seats{
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    
-    }
-.seat {
-    display: inline-block;
-    font-size: 25px;
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-    text-align: center;
-    line-height: 60px;
-    border-radius: 5px;
-    background-color: green;
-    cursor: pointer;
-
-}
-
-.seat.selected {
-    background-color: red;
-    color: aliceblue;
-    
-    
-}
-
-.dropdown-btn {
-    background-color: blueviolet;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20%;
-    margin-right: 20%;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  letter-spacing: 2px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-  animation: blinkk 1s infinite;
-}
-
-.dropdown-btn:active{
-    scale: 1.25;
-}
-#hide{
-display: none;
-}
-
-#bookBtn {
-    background-color: #4CAF50;
-
-  color: white;
-  font-size: 25px;
-  font-weight: bold;
-  padding: 10px 10px;
-    margin-left: 13%;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-  
-
-}
-#bookBtn:active{
-    background-color: red;
-    color: white;
-    
-}
-
-#bookBtn:hover {
-    background-color: yellow;
-    color: black;
-    font-weight: bold;
-    content: "select seat";
-}
-.col{
-    display: flex;
-    justify-items: center;
-    align-content: center;
-}
-#train1{
-    font-size: 30px;
-    color: green;
-    font-weight: bold;
-}
-
-#right {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    margin-left: 5%;
-    margin-top: 5%;
-    border: 2px rgb(196, 113, 19);
-    border-radius: 8px;
-    padding-left: 10px;
-    padding-bottom: 60px;
-    box-shadow: 0 0 10px rgb(8, 5, 5);
-    width: 650px;
-    transform: scale(100%,125%);
-
-
-}
-
-#availableTrainId {
-    margin-top: 0;
-    margin-bottom: 10px;
-    
-
-}
-
-#journey-data{
-    white-space: pre-line;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    line-height: 1.5;
-    position: relative;
-    margin-top: 10px;
-    border: solid black;
-    padding: 5%;
-    border-radius: 8px;
-    font-size: 30px;
-    box-sizing: border-box;
-    box-shadow: 0 0 10px #1dcf26;
-}
-
-#iframe{
-    height: 460px;
-    margin: 50px 0 0 50px;
-    box-shadow: 0 0 10px rgb(8, 5, 5);
-    border-radius: 8px;
-    transform: scale(220%,200%);
-    margin-top: 38%;
-}
-
-
-#left_station{
-    margin-left: 20%;
-    font-size:15px;
-}
-#selected_seats{
-    font-weight: bold;
-    font-size: 25px;
-}
-#left_station{
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#loading{
-z-index: 9999;
-width: 400px;
-height: 400px;
-background-image: url("res/loading.gif");
-
-}
-#confirmation_popup{
-    width: auto;
-    height: auto;
-    background-color: rgba(255, 255, 255, .984);
-    color: wheat;
-    border: 5px green;
-    box-shadow: rgba(0, 0, 0, 0.5);
-    white-space: pre-line;
-
-    top: 0;
-    border-radius: 25px;
-    display: none;
-    
-
-
-}
-#heading_ct{
-    color:red;
-    font-family:monospace;
-    font-size: 50px;
-    text-align: center;
-}
-#table{
-    color: rgb(0, 0, 0);
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10%;
-    border: none;
-    z-index: 9999;
-    padding: 1%;
-}
-.confirmation_btns{
-    background-color: #ccc;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    gap: 100px;
-    border-radius: 50px;
-}
-.con_bt{
-    font-size: 25px;
-    padding-left: 5%;
-    padding-right: 5%;
-    border-radius: 15px;
-}
-#confirm_btn{
-    background-color: green;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+    .header {
+        position: fixed;
+      bottom: 40%;
+      right:0;
+      z-index: 9999;
+      background-color: #ffffff;
+      padding: 10px;
+      box-shadow: 0 0 20px rgba(144, 182, 9, 0.5);
+      border-radius: 29px;
+      flex-wrap: wrap;
+      width: 250px;
+      
        
-}
-#confirm_btn:active{
-    scale:1.25;
-}
-th{
-    text-align: left;
-    margin-left: 5%;
-   
-}
-#cancel_btn{
-    background-color: red;
-    color: white;
-    font-weight: bold;    
-}
-#cancel_btn:active{
-    scale:1.25;
-}
-
-
-.bangladesh-flag {
-    margin-top: 200px;
-    margin-left: 200px;
-    width: 300px;
-    height: 300px;
+    }
+    .train {
+        border: solid;
+        border-radius: 10px;
+        box-sizing: border-box;
+        position: fixed;
+        display: grid;
+        grid-template-columns: repeat(2, 5fr);
+        grid-gap: 100px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .containerdiv{
+        margin-top: -20%;
+        display: none;
+        width:auto;
+        height: auto;
+        justify-content: center;
+        background-color: rgb(255, 255, 255);
+        transform:scale(75%,75%) ;
+    }
+    
+    .coach {
+        margin: 0 10px;
+        font-size: x-large;
+        
+        }
+    .seats{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        
+        }
+    .seat {
+        display: inline-block;
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 5px;
+        background-color: green;
+        cursor: pointer;
+    
+    }
+    
+    .seat.selected {
+        background-color: red;
+        color: aliceblue;
+        
+        
+    }
+    
+    .dropdown-btn {
+        background-color: blueviolet;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 20%;
+        margin-right: 20%;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      animation: blinkk 1s infinite;
+    }
+    
+    .dropdown-btn:active{
+        scale: 1.25;
+    }
+    #hide{
+    display: none;
+    }
+    
+    #bookBtn {
+        background-color: #4CAF50;
+    
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      padding: 10px 10px;
+        margin-left: 13%;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      
+    
+    }
+    #bookBtn:active{
+        background-color: red;
+        color: white;
+        
+    }
+    
+    #bookBtn:hover {
+        background-color: yellow;
+        color: black;
+        font-weight: bold;
+        content: "select seat";
+    }
+    .col{
+        display: flex;
+        justify-items: center;
+        align-content: center;
+    }
+    #train1{
+        font-size: 30px;
+        color: green;
+        font-weight: bold;
+    }
+    
+    #right {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5%;
+        margin-top: 5%;
+        border: 2px rgb(196, 113, 19);
+        border-radius: 8px;
+        padding-left: 10px;
+        padding-bottom: 60px;
+        box-shadow: 0 0 10px rgb(8, 5, 5);
+        width: 650px;
+        transform: scale(100%,125%);
+    
+    
+    }
+    
+    #availableTrainId {
+        margin-top: 0;
+        margin-bottom: 10px;
+        
+    
+    }
+    
+    #journey-data{
+        white-space: pre-line;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        line-height: 1.5;
+        position: relative;
+        margin-top: 10px;
+        border: solid black;
+        padding: 5%;
+        border-radius: 8px;
+        font-size: 30px;
+        box-sizing: border-box;
+        box-shadow: 0 0 10px #1dcf26;
+    }
+    
+    #iframe{
+        height: 460px;
+        margin: 50px 0 0 50px;
+        box-shadow: 0 0 10px rgb(8, 5, 5);
+        border-radius: 8px;
+        transform: scale(220%,200%);
+        margin-top: 38%;
+    }
+    
+    
+    #left_station{
+        margin-left: 20%;
+        font-size:15px;
+    }
+    #selected_seats{
+        font-weight: bold;
+        font-size: 25px;
+    }
+    #left_station{
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+    }
+    
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #loading{
     z-index: 9999;
-    border-radius: 50%;
-    background-color: green;
-    position: relative;
-    animation: spin 5s linear infinite;
-}
-
-/* Add the red circle to the flag */
-.bangladesh-flag::before {
-    content: "";
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-}
-@keyframes spin {
-    0% { transform: rotate(0deg);
+    width: 400px;
+    height: 400px;
+    background-image: url("res/loading.gif");
+    
+    }
+    #confirmation_popup{
+        width: auto;
+        height: auto;
+        background-color: rgba(255, 255, 255, .984);
+        color: wheat;
+        border: 5px green;
+        box-shadow: rgba(0, 0, 0, 0.5);
+        white-space: pre-line;
+    
+        top: 0;
+        border-radius: 25px;
+        display: none;
+        
+    
+    
+    }
+    #heading_ct{
+        color:red;
+        font-family:monospace;
+        font-size: 50px;
+        text-align: center;
+    }
+    #table{
+        color: rgb(0, 0, 0);
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10%;
+        border: none;
+        z-index: 9999;
+        padding: 1%;
+    }
+    .confirmation_btns{
+        background-color: #ccc;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        gap: 100px;
+        border-radius: 50px;
+    }
+    .con_bt{
+        font-size: 25px;
+        padding-left: 5%;
+        padding-right: 5%;
+        border-radius: 15px;
+    }
+    #confirm_btn{
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+           
+    }
+    #confirm_btn:active{
+        scale:1.25;
+    }
+    th{
+        text-align: left;
+        margin-left: 5%;
+       
+    }
+    #cancel_btn{
+        background-color: red;
+        color: white;
+        font-weight: bold;    
+    }
+    #cancel_btn:active{
+        scale:1.25;
+    }
+    
+    
+    .bangladesh-flag {
+        margin-top: 200px;
+        margin-left: 200px;
+        width: 300px;
+        height: 300px;
+        z-index: 9999;
         border-radius: 50%;
-        margin-left: 0px;
+        background-color: green;
+        position: relative;
+        animation: spin 5s linear infinite;
     }
-    100% { transform: rotate(360deg);
-        border-radius: 35%;
-        margin-left: 1000px;
+    
+    /* Add the red circle to the flag */
+    .bangladesh-flag::before {
+        content: "";
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
     }
+    @keyframes spin {
+        0% { transform: rotate(0deg);
+            border-radius: 50%;
+            margin-left: 0px;
+        }
+        100% { transform: rotate(360deg);
+            border-radius: 35%;
+            margin-left: 1000px;
+        }
+    }
+    
+    @-webkit-keyframes blinkk {
+        100% {
+          box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
+            0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
+        }
+      }
+      
+      @keyframes blinkk {
+        100% {
+          box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
+            0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
+        }
+      }
+    
 }
 
-@-webkit-keyframes blinkk {
-    100% {
-      box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
-        0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
-    }
-  }
-  
-  @keyframes blinkk {
-    100% {
-      box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
-        0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
-    }
-  }
 
 
-  /*-- media screen */
-@media only screen and (min-width: 960px){
+
+  /*-- media screen for mobile % $ */
+@media only screen and (max-width: 720px){
+    @keyframes blink {
+        0% {
+            opacity: .75;
+        }
+        25% {
+            opacity:.25;
+            background-color: #1dcf26;
+        }
+        50% {
+            opacity:.5;
+            background-color: rgb(224, 17, 207);
+        }
+        75% {
+            opacity:.75;
+            background-color: blue;
+        }
+        100% {
+            opacity:1;
+            background-color: black;
+        }
+    }
+    body {
+        font-size: 16px;
+        max-width: 720px;
+        margin: 10 auto;
+        padding-top: 15px;
+        box-sizing: border-box;    
+        
+    }
+    
+    .content {
+        box-sizing: border-box;
+        width: calc(100% - 30px);
+        height: calc(100% - 30px);
+    }
+    .header {
+        position: fixed;
+      bottom: 40%;
+      right:0;
+      z-index: 9999;
+      background-color: #ffffff;
+      padding: 10px;
+      box-shadow: 0 0 20px rgba(144, 182, 9, 0.5);
+      border-radius: 29px;
+      flex-wrap: wrap;
+      width: 150px;
+      
+       
+    }
+    .train {
+        border: solid;
+        border-radius: 10px;
+        box-sizing: border-box;
+        position: fixed;
+        display: grid;
+        grid-template-columns: repeat(1, 5fr);
+        grid-gap: 50px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .containerdiv{
+        margin-top: 20%;
+        margin-left: 15%;
+        
+        display: none;
+        width:auto;
+        height: auto;
+        justify-content: center;
+        background-color: rgb(255, 255, 255); 
+        box-shadow: 0 0 10px rgb(8, 5, 5);  
+        border-radius: 45px;  
+        padding: 10%;           
+    }
+    
+    .coach {
+        margin: 0 10px;
+        font-size: x-large;
+        
+        }
+    .seats{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        
+        }
+    .seat {
+        display: inline-block;
+        font-size: 25px;
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 5px;
+        background-color: green;
+        cursor: pointer;
+    
+    }
+    
+    .seat.selected {
+        background-color: red;
+        color: aliceblue;
+        
+        
+    }
+    
+    .dropdown-btn {
+        background-color: blueviolet;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 18%;
+        margin-right: 18%;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      animation: blinkk 1s infinite;
+      border-radius: 45px;
+    }
+    
+    .dropdown-btn:active{
+        scale: 1.25;
+    }
+    #hide{
+    display: none;
+    }
+    
+    #bookBtn {
+        background-color: #4CAF50;
+    
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 10px;
+        margin-left: 13%;
+      border: none;
+      border-radius: 45px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      
+    
+    }
+    #bookBtn:active{
+        background-color: red;
+        color: white;
+        
+    }
+    
+    #bookBtn:hover {
+        background-color: yellow;
+        color: black;
+        font-weight: bold;
+        content: "select seat";
+    }
+    .col{
+        display: flex;
+        justify-items: center;
+        align-content: center;
+    }
+    #train1{
+        font-size: 30px;
+        color: green;
+        font-weight: bold;
+    }
+    
+    #right {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5%;
+        margin-top: 5%;
+        border: 2px rgb(196, 113, 19);
+        border-radius: 8px;
+        padding-left: 10px;
+        padding-bottom: 60px;
+        
+        width: 650px;
+        transform: scale(100%,125%);
+    
+    
+    }
+    
+    #availableTrainId {
+        margin-top: 0;
+        margin-bottom: 10px;
+        
+    
+    }
+    
+    #journey-data{
+        white-space: pre-line;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        line-height: 1.5;
+        position: relative;
+        margin-top: 10px;
+        border: solid black;
+        padding: 5%;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+        box-shadow: 0 0 10px #1dcf26;
+    }
+    
+    #iframe{
+        height: auto;
+        
+        margin-left:7%;
+        box-shadow: 0 0 10px rgb(8, 5, 5);
+        border-radius: 8px;
+        
+        
+    }
+    
+    
+    #left_station{
+        margin-left: 20%;
+        font-size:15px;
+    }
+    #selected_seats{
+        font-weight: bold;
+        font-size: 25px;
+    }
+    #left_station{
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+    }
+    
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #loading{
+    z-index: 9999;
+    width: 400px;
+    height: 400px;
+    background-image: url("res/loading.gif");
+    
+    }
+    #confirmation_popup{
+        width: auto;
+        height: auto;
+        background-color: rgba(255, 255, 255, 0.984);
+        color: wheat;
+        border: 5px solid green ;
+        box-shadow: rgba(0, 0, 0, 0.5);
+        white-space: pre-line;
+        padding: 10px;
+        top: 0;
+        border-radius: 25px;
+        display: none;
+        
+    
+    
+    }
+    #heading_ct{
+        color:red;
+        font-family:monospace;
+        font-size: 50px;
+        text-align: center;
+    }
+    #table{
+        color: rgb(0, 0, 0);
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10%;
+        border: none;
+        z-index: 9999;
+        padding: 1%;
+    }
+    .confirmation_btns{
+        background-color: #ccc;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        gap: 100px;
+        border-radius: 50px;
+    }
+    .con_bt{
+        font-size: 25px;
+        padding-left: 5%;
+        padding-right: 5%;
+        border-radius: 15px;
+    }
+    #confirm_btn{
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+           
+    }
+    #confirm_btn:active{
+        scale:1.25;
+    }
+    th{
+        text-align: left;
+        margin-left: 5%;
+       
+    }
+    #cancel_btn{
+        background-color: red;
+        color: white;
+        font-weight: bold;    
+    }
+    #cancel_btn:active{
+        scale:1.25;
+    }
+    
+    
+    .bangladesh-flag {
+        margin-top: 200px;
+        margin-left: 200px;
+        width: 300px;
+        height: 300px;
+        z-index: 9999;
+        border-radius: 50%;
+        background-color: green;
+        position: relative;
+        animation: spin 5s linear infinite;
+    }
+    
+    /* Add the red circle to the flag */
+    .bangladesh-flag::before {
+        content: "";
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg);
+            border-radius: 50%;
+            margin-left: 0px;
+        }
+        100% { transform: rotate(360deg);
+            border-radius: 35%;
+            margin-left: 1000px;
+        }
+    }
+    
+    @-webkit-keyframes blinkk {
+        100% {
+          box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
+            0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
+        }
+      }
+      
+      @keyframes blinkk {
+        100% {
+          box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca,
+            0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
+        }
+      }
     
 }
