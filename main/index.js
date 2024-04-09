@@ -1117,14 +1117,14 @@ onValue(ref(database,pathForCurPos),(snapshot)=>{
                 if(curPosVar>=0 && curPosVar<snapshot.val().stations.length){
                     ////////////////console.log(snapshot.val().stations);
                     document.getElementById('left_station').innerText = "Left from : "+snapshot.val().stations[curPosVar];
-                    document.getElementById('left_station').style.setProperty("font-size","27px");
+                    document.getElementById('left_station').style.setProperty("font-size","25px");
                     document.getElementById('left_station').style.setProperty("background-color","red");
                     document.getElementById('left_station').style.setProperty("color","white");
                     document.getElementById('left_station').style.setProperty("position","fixed");
-                    document.getElementById('left_station').style.setProperty("left","0");
+                    document.getElementById('left_station').style.setProperty("left","-2%");
                     document.getElementById('left_station').style.setProperty("padding-right","2px");
                     document.getElementById('left_station').style.setProperty("border","1px solid black");
-                    document.getElementById('left_station').style.setProperty("width","28vw");
+                    document.getElementById('left_station').style.setProperty("width","150px");
                     //document.getElementById('left_station').style.setProperty("animation","blink 5s infinite");
 
                     
