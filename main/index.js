@@ -64,7 +64,7 @@ const trainName = "train1";
 let availableTrains = ['Train1','Train2'];
 
 //============= variables=============
-const seatTimeLimit = 120; //seconds
+const seatTimeLimit = 1200; //seconds
 var curPos = "";
 var selectedSeatLocal = []; //variable
 var bookedSeatsVar = []; //variable
@@ -267,7 +267,7 @@ function unavailable(){
     document.getElementById('bookBtn').style.background = 'gray';
     document.getElementById('dropdown-div').style.display = 'none';
     //document.body.innerHTML += "<h1><p align='center'><font color='red'>Train Already Left </font></h2><br><br><br></p>"
-    document.getElementById('availableTrainId').innerHTML = "<h1><p align='center'><font color='red'>Train Already Left </font></h2></p>"
+    document.getElementById('availableTrainId').innerHTML = "<h1><font color='red'>Train Already Left </font></h2>"
     //document.getElementById('journeydata').style.boxShadow = "box-shadow: 0 0 10px #FF0000";
     localStorage.clear();
     localStorage.setItem('selected_seats','');
@@ -442,11 +442,14 @@ fetchDataOnce(pathToShow,5) //trainInfo
                 if (offDayVar.toLowerCase() === daysInWeek[journey_idx].toLowerCase()) {                                                                           
                     var element = document.querySelector('.content');
                     element.style.display = 'none';//checking if today is off day
-                    document.getElementById('containerForAvalaibleTrain').innerText = availableTrains[0] + " Today is OFF";
-                    document.getElementById('availableTrainId').innerHTML = "<h2  style='color: red;'>Today is OFF</h2>"
+                    document.getElementById('availableTrainId').innerHTML = "<h1  style='color: red;'>Today is OFF</h1>";
+                    document.getElementById('containerForAvalaibleTrain').innerText = availableTrains[0];
+                    document.getElementById('journey-data').style = 'box-shadow: 0 0 10px #cf1212;';
+                    //document.getElementById('availableTrainId').innerText = "Today is OFF";
                     let journeyDataIdWet = document.getElementById('journey-data');
                     journeyDataIdWet.innerHTML = "From: " + journeyData[0] + "<br>To: " + journeyData[1] + "\nDate: " + journeyData[2] + "<br>";
-                    journeyDataIdWet.innerHTML += "Day: " + daysInWeek[journey_idx] + "<br>";
+                    let offday_n = daysInWeek[journey_idx].toUpperCase();
+                    journeyDataIdWet.innerHTML += "OFF Day: <i><u>" + offday_n + "</u></i><br>";
                     journeyDataIdWet.innerHTML += "Depart Time: " + departTimeVar[fromStationID] + "<br>";
                     journeyDataIdWet.innerHTML += "Arrival Time: " + departTimeVar[4] + "<br>";
                     //journeyDataIdWet.innerText += "Allocated seats: " + allocatedSeatsVar + "\n";
@@ -456,7 +459,7 @@ fetchDataOnce(pathToShow,5) //trainInfo
                     document.getElementById('containerForAvalaibleTrain').innerHTML = trainNameCap;
                     let journeyDataIdWet = document.getElementById('journey-data');
                     journeyDataIdWet.innerHTML = "From: " + journeyData[0] + "<br>To: " + journeyData[1] + "\nDate: " + journeyData[2] + "<br>";
-                    journeyDataIdWet.innerHTML += "Day: " + daysInWeek[journey_idx] + "<br>";
+                    journeyDataIdWet.innerHTML += "Today: " + daysInWeek[journey_idx] + "<br>";
                     journeyDataIdWet.innerHTML += "Depart Time: " + departTimeVar[fromStationID] + "<br>";
                     journeyDataIdWet.innerHTML += "Arrival Time: " + departTimeVar[4] + "<br>";
                     
@@ -530,7 +533,7 @@ function confirmation_popup(remTimeForBooking){
                 clickCancelBtnFn();
                 return remTimeForBooking;
             }
-            conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Confirm Your Booking?</u></h1><h2 align='center' style='color:blue;'>Remaining Time: "+Math.floor(remTimeForBooking/1000)+" seconds </h1>";
+            conf_popup_id.innerHTML = "<h1 id='heading_ct'><u>Booking Confirmation</u></h1><h2 align='center' style='color:blue;'>Remaining Time: "+Math.floor(remTimeForBooking/1000)+" seconds </h1>";
             document.getElementById('table').innerHTML="<tr><th>Passenger</th><td>"+getUsermail()+"</td></tr><tr>"+"<th>From</th><td>"+journeyData[0]+"</td></tr><tr><th>To</th><td>"+journeyData[1]+"</td></tr><tr><th>Date of Journey</th><td style='font-weight: bold'>"+journeyData[2]+"</td></tr><tr><th>Seat(s)</th><td>"+selectedSeatLocal+"</td></tr><tr><th>Total Fare </th><td>BDT "+selectedSeatLocal.length*getFareUnitVarFn()+"</td></tr>";
             remTimeForBooking -= 1000;     
         }

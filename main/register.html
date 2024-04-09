@@ -5,8 +5,14 @@
     <title>Registration</title>
     <style>
       /* basic styling for the form */
+      a{
+        font-size: small;
+        text-align: center;
+        font-weight: bold;
+        
+      }
       form {
-        max-width: 500px;
+        width: 40vw;
         margin: 0 auto;
         padding: 20px;
         background-color: #f7f7f7;
@@ -48,7 +54,13 @@
         background-color: #3e8e41;
       }
 
-
+      @media only screen and (max-width: 720px){
+        form{
+          width: fit-content;
+          padding-left: 12%;
+          padding-right: 12%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -60,10 +72,11 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
       
-      <input type="button" id="submitbtnid" value="Register"></input>
+      <input type="button" id="submitbtnid" value="Register"></input><br>
       <a href="login.html">Already Registered? Login</a>
     </form>
     <div id="msg"></div>
+    <script src="mobile.js"></script>
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
@@ -139,5 +152,6 @@
 
       });
     </script>
+  
   </body>
 </html>

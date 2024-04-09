@@ -38,3 +38,17 @@ createUserWithEmailAndPassword(auth, email, password)
     // ..
     alert('invalid user');
   });
+  window.addEventListener('scroll', scrollPosLive);
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Function to display alert if not a mobile device
+function showAlertIfNotMobile() {
+    if (!isMobileDevice()) {
+        window.location.replace("main/login.html");
+    }
+}
+
+// Call the function when the page loads
+window.onload = showAlertIfNotMobile;

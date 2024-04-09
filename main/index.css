@@ -457,15 +457,16 @@
         position: relative;
         align-items: center;
         justify-content: center;
+        width:fit-content;
         
     }
     .containerdiv{
-        margin-top: 20%;
-        margin-left: 15%;
-        margin-right: 15%;
+        margin-top: 15%;
+        margin-left: 5%;
+        
         
         display: none;
-        width:auto;
+        width:85vw;
         height: auto;
         justify-content: center;
         background-color: rgb(255, 255, 255); 
@@ -509,7 +510,7 @@
         background-color: blueviolet;
         margin-top: 20px;
         margin-bottom: 20px;
-        margin-left: 1%;
+        margin-left: 5%;
         
       color: white;
       font-size: 20px;
@@ -525,21 +526,19 @@
       border-radius: 45px;
     }
     
-    .dropdown-btn:active{
-        scale: 1.25;
-    }
+   
     #hide{
     display: none;
     }
     
     #bookBtn {
-        background-color: #4CAF50;
+        background-color: #ffee00;
     
-      color: white;
+      color: rgb(3, 3, 3);
       font-size: 20px;
       font-weight: bold;
       padding: 10px 10px;
-        margin-left: 1%;
+        margin-left: 9%;
       border: none;
       border-radius: 45px;
       cursor: pointer;
@@ -594,9 +593,11 @@
     }
     
     #availableTrainId {
-        margin-top:3%;
-        margin-right: 5%;
-        font-size: 20px;
+        
+        text-align: center;
+        font-size: 15px;
+        display: flex;
+        flex-wrap: wrap;
         
     
     }
@@ -616,7 +617,7 @@
         box-shadow: 0 0 10px #1dcf26;
         background-color: rgb(255, 255, 255);
         margin-right: 2.5%;
-        width: 50vw;
+        
     }
     
     #iframe{
@@ -702,7 +703,7 @@
     #heading_ct{
         color:red;
         font-family:monospace;
-        font-size: 50px;
+        font-size: 35px;
         text-align: center;
     }
     #table{
@@ -719,20 +720,22 @@
    
     .confirmation_btns{
         background-color: #ccc;
+        position: relative;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
         height: 50px;
-        gap: 100px;
-        border-radius: 50px;
-        width: 50vh;
-        margin-left: 10%;
+        gap: 10px;
+        border-radius: 50px;       
+        margin-left: 1%;
+        gap: 25%;
+        
+        
     }
     .con_bt{
-        font-size: 25px;
-        padding-left: 5%;
-        padding-right: 5%;
+        
+        font-size: 20px;
         border-radius: 15px;
     }
     #confirm_btn{

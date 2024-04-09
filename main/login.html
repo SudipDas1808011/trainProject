@@ -7,7 +7,7 @@
     <style>
       /* basic styling for the form */
       form {
-        max-width: 500px;
+        max-width: 40vw;
         margin: 0 auto;
         padding: 20px;
         background-color: #f7f7f7;
@@ -27,13 +27,13 @@
       }
       input[type="text"],
       input[type="password"] {
-        width: 50%;
+        width: 90%;
         padding: 10px;
         border-radius: 5px;
         border: 2px solid black;
         box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
         margin-bottom: 20px;
-
+        
 
       }
       input[type="button"] {
@@ -64,7 +64,22 @@
       #confirmation{
         background-color: red;
       }
+      a{
+        font-size: small;
+        text-align: center;
+        font-weight: bold;
+        
+      }
 
+    
+      @media only screen and (max-width: 720px){
+        form{
+          width: fit-content;
+          padding-left: 15%;
+          padding-right: 15%;
+        }
+      }
+    
     </style>
   </head>
   <body bgcolor="#dfe0c9">
@@ -76,8 +91,8 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" placeholder="password" required>
       
-      <input type="button" id="submitbtnid" value="Login"></input>
-      <a href="register.html">No Account? Register</a>
+      <input type="button" id="submitbtnid" value="Login"></input><br>
+      <a href="register.html">No Account? Register Here</a>
       <p id="error-message" style="display:none; color:red;">Incorrect email or password. Please try again.</p>
     </form>
     <div id="msg"></div>
